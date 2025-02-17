@@ -1,0 +1,167 @@
+@use "@/app/scss/variables" as *;
+@use "@/app/scss/functions" as *;
+
+#itinerarys_empty {
+  @include full_width;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: rem(5);
+}
+
+#itinerarys_auth {
+  @include full_width;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $dark;
+
+  .auth_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem(5);
+    background-color: $yellow;
+    padding: rem(20);
+    border-radius: rem(10);
+
+    p {
+      margin-bottom: rem(10);
+    }
+
+    input {
+      width: 100%;
+      padding: rem(10);
+      border-radius: rem(10);
+      border: none;
+    }
+
+    button {
+      margin-top: rem(10);
+      width: 100%;
+      background-color: $dark;
+      color: $light;
+      border-radius: rem(10);
+      padding: rem(10) rem(15);
+
+      &:hover {
+        background-color: $light;
+        color: $dark;
+      }
+    }
+  }
+}
+
+#itinerarys {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20);
+
+  .itinerarys_header {
+    @include full_width;
+    @include full_width;
+    background-color: $dark;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 rem(20) rem(20);
+
+    @include breakpoint(medium) {
+      height: 50vh;
+    }
+
+    h1 {
+      @include cookie;
+      font-size: rem(60);
+      color: $light;
+
+      @include breakpoint(medium) {
+        font-size: rem(80);
+      }
+    }
+  }
+
+  .itinerarys_container {
+    @include full_width;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: rem(20);
+
+    @include breakpoint(medium) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .itinerary_card {
+      width: 100%;
+      background-color: $yellow;
+      backdrop-filter: blur(10px);
+      border-radius: rem(10);
+      padding: rem(10) rem(15);
+
+      @include breakpoint(medium) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .left {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          margin-top: rem(2);
+        }
+
+        .itinerary_date,
+        .itinerary_id {
+          font-size: rem(12);
+        }
+
+        .itinerary_status {
+          font-size: rem(12);
+          background-color: $dark;
+          color: $light;
+          width: fit-content;
+          padding: rem(5) rem(10);
+          border-radius: rem(10);
+          margin-top: rem(10);
+        }
+      }
+
+      .right {
+        display: flex;
+        gap: rem(10);
+
+        @include breakpoint(medium) {
+          align-items: flex-end;
+        }
+      }
+
+      .itinerary_button {
+        margin-top: rem(10);
+        width: 100%;
+        background-color: $dark;
+        color: $light;
+        border-radius: rem(10);
+        padding: rem(10) rem(15);
+
+        @include breakpoint(medium) {
+          font-size: rem(12);
+          width: fit-content;
+        }
+
+        &:hover {
+          background-color: $light;
+          color: $dark;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+@use "@/app/scss/variables" as *;
+
+#PageLoading {
+  max-width: 100vw;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-weight: 600;
+
+  .img-container {
+    width: 80px;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    margin-bottom: 10px;
+
+    img {
+      object-fit: contain;
+
+      animation: flash 1.5s ease-in-out infinite;
+
+      @keyframes flash {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+
+        50% {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  p {
+    opacity: 0.5;
+  }
+
+  .loader-container {
+    display: flex;
+    gap: 20px;
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: $yellow;
+      animation: scale 600ms ease-in-out infinite;
+
+      &:nth-of-type(2) {
+        animation-delay: 200ms;
+      }
+      &:nth-of-type(3) {
+        animation-delay: 400ms;
+      }
+
+      @keyframes scale {
+        0%,
+        100% {
+          scale: 1;
+        }
+        50% {
+          scale: 1.5;
+        }
+      }
+    }
+  }
+}

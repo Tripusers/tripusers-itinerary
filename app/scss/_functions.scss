@@ -1,0 +1,50 @@
+@use "sass:math";
+@use "sass:map";
+
+//*--------
+//*-------- Rem/EM functions ---------->
+//*--------
+
+@function rem($pixel) {
+  @if math.is-unitless($pixel) {
+    @return math.div($pixel, 16) + rem;
+  } @else {
+    @error 'Don\'t use units when using the rem() function; only numbers.';
+  }
+}
+
+@function em($pixel) {
+  @if math.is-unitless($pixel) {
+    @return math.div($pixel, 16) + em;
+  } @else {
+    @error 'Don\'t use units when using the em() function; only numbers.';
+  }
+}
+
+//*--------
+//*-------- Breakpoint functions ---------->
+//*--------
+
+$breakpoint-up: (
+  "medium": em(820),
+  "large": em(1025),
+  "xlarge": em(2040),
+);
+
+$breakpoint-down: (
+  "medium": em(819.98),
+  "large": em(1023.98),
+  "xlarge": em(2039.98),
+);
+
+@mixin breakpoint($size) {
+  @media screen and (min-width: map.get($breakpoint-up, $size)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($size) {
+  @media screen and (min-width: map.get($breakpoint-down, $size)) {
+    @content;
+  }
+}

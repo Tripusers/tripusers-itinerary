@@ -1,0 +1,375 @@
+@use "@/app/scss/variables" as *;
+
+header {
+  position: fixed;
+  max-width: 100vw;
+  height: 80px;
+  width: 100%;
+  padding: 0 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99;
+  transition: background 200ms ease-in-out 100ms;
+
+  .logo-container {
+    position: relative;
+
+    width: 140px;
+    height: 50px;
+
+    img {
+      object-fit: contain;
+    }
+  }
+
+  #menu {
+    color: $light;
+
+    button {
+      color: $yellow;
+    }
+
+    nav {
+      position: absolute;
+      top: 0;
+      right: -100%;
+
+      background-color: $dark;
+      width: 100vw;
+      height: 100vh;
+      height: 100lvh;
+      max-width: 100%;
+      z-index: 99;
+
+      display: flex;
+      flex-direction: column;
+
+      padding: 20px 4vw 150px 4vw;
+      justify-content: space-between;
+
+      .search-container {
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 100%;
+
+        .box {
+          background-color: $light;
+          position: absolute;
+          top: 150%;
+          width: 88%;
+          border-radius: 5px;
+          padding: 10px;
+          backdrop-filter: blur(5px);
+          box-shadow: 0 0 1px $dark;
+          color: $dark;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          z-index: 2;
+          overflow: hidden;
+
+          a {
+            transition: color 200ms ease-in-out;
+            padding: 5px 10px;
+            border-radius: 5px;
+            &:hover {
+              color: $yellow;
+            }
+          }
+        }
+
+        input {
+          width: 100%;
+          background: none;
+          border: 1px solid $light;
+          height: 35px;
+          border-radius: 10px;
+          color: $light;
+          padding: 0 35px 0 15px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        svg {
+          position: absolute;
+          right: 30px;
+        }
+      }
+
+      .logo-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 20px;
+
+        .logo-mark {
+          position: relative;
+          width: 40px;
+          height: 40px;
+
+          img {
+            object-fit: contain;
+          }
+        }
+      }
+
+      .links {
+        width: 100%;
+        padding: 20px;
+        position: relative;
+
+        a {
+          display: block;
+          width: 100%;
+          height: 60px;
+          border-bottom: 1px solid $light;
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          justify-content: space-between;
+
+          svg {
+            opacity: 0.25;
+            color: $yellow;
+          }
+        }
+      }
+
+      .formButton {
+        background-color: $yellow;
+        color: $dark;
+        margin: 0 20px;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      .tel {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        svg {
+          color: $yellow;
+        }
+      }
+    }
+  }
+}
+
+//*---------->> Tablet
+
+@media screen and (min-width: 820px) {
+  header {
+    #menu {
+      .ipad-menu {
+        display: flex;
+        align-items: center;
+        gap: 5vw;
+
+        .search-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+
+          .box {
+            background-color: $light;
+            position: absolute;
+            top: 150%;
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 1px $dark;
+            color: $dark;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            a {
+              transition: color 200ms ease-in-out;
+              padding: 5px 10px;
+              border-radius: 5px;
+              &:hover {
+                color: $yellow;
+              }
+            }
+          }
+
+          input {
+            width: 200px;
+            background: none;
+            border: 1px solid $light;
+            height: 35px;
+            border-radius: 10px;
+            color: $light;
+            padding: 0 30px 0 15px;
+            font-size: 0.9rem;
+            font-weight: 400;
+
+            &:focus {
+              outline: none;
+            }
+
+            &::placeholder {
+              color: $light;
+            }
+          }
+
+          svg {
+            position: absolute;
+            right: 5px;
+          }
+        }
+
+        .formButton {
+          background-color: $yellow;
+          color: $light;
+          font-size: 0.9rem;
+          padding: 8px 20px;
+          border-radius: 10px;
+        }
+      }
+
+      nav {
+        padding-bottom: 50px;
+        height: 100vh;
+        height: 100dvh;
+
+        .links {
+          padding: 100px;
+        }
+      }
+    }
+  }
+}
+
+//*---------->> desktop
+
+@media screen and (min-width: 1025px) {
+  header {
+    padding: 0 12vw;
+
+    .logo-container {
+      width: 170px;
+      height: 60px;
+
+      //border: 1px dotted $red;
+    }
+
+    #menu {
+      .ipad-menu {
+        gap: 2vw;
+
+        .menu-button {
+          transition: color 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
+          &:hover {
+            color: $red;
+          }
+        }
+
+        .search-container {
+          position: relative;
+
+          .box {
+            background-color: $light;
+            position: absolute;
+            top: 150%;
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 1px $dark;
+            color: $dark;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            a {
+              transition: color 200ms ease-in-out;
+              padding: 5px 10px;
+              border-radius: 5px;
+              &:hover {
+                color: $yellow;
+              }
+            }
+          }
+        }
+
+        .formButton {
+          background-color: $yellow;
+          color: $dark;
+          padding: 8px 20px;
+          border-radius: 10px;
+          color: $light;
+          transition: background 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
+          &:hover {
+            background-color: $dark;
+          }
+        }
+      }
+
+      nav {
+        width: 30vw;
+        height: 100vh;
+        height: 100dvh;
+        padding: 20px 4vw 40px 4vw;
+
+        .logo-container {
+          padding: 0;
+
+          .menu-close-button {
+            transition: color 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
+            &:hover {
+              color: $red;
+            }
+          }
+        }
+
+        .links {
+          padding: 0;
+        }
+
+        .formButton {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+//*---------->> header scrolled\
+
+.scrolled {
+  background-color: $light;
+  box-shadow: 0px 0px 1px $dark;
+}
+
+//*---------->> Tablet
+
+@media screen and (min-width: 820px) {
+  .scrolled {
+    #menu {
+      .search-container {
+        input {
+          border: 1px solid $dark !important;
+          color: $dark !important;
+
+          &::placeholder {
+            color: $dark !important;
+          }
+        }
+
+        svg {
+          color: $dark !important;
+        }
+      }
+    }
+  }
+}

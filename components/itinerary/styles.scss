@@ -1,0 +1,121 @@
+@use "@/app/scss/variables" as *;
+@use "@/app/scss/functions" as *;
+
+#itinerary_hero {
+  @include full_width;
+  height: 60vh;
+  @include bg_animation;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 0 0 rem(20) rem(20);
+
+  .dark_fade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $dark;
+    z-index: 2;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
+    background-color: rgba(0, 0, 0, 0.65);
+
+    @include breakpoint(large) {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  #hero_image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  .hero_content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: rem(-50);
+
+    @include breakpoint(large) {
+      margin-top: rem(-100);
+    }
+
+    h1 {
+      @include cookie;
+      color: $yellow;
+      font-size: rem(40);
+      z-index: 4;
+      margin-bottom: rem(-20);
+
+      @include breakpoint(large) {
+        font-size: rem(80);
+        margin-bottom: rem(-40);
+      }
+    }
+
+    h2 {
+      color: $light;
+      font-size: rem(50);
+      text-transform: uppercase;
+      z-index: 3;
+      margin-bottom: rem(10);
+
+      @include breakpoint(large) {
+        font-size: rem(90);
+      }
+    }
+
+    .date_container {
+      display: flex;
+      align-items: center;
+      gap: rem(2);
+      background-color: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      padding: rem(10) rem(15);
+      border-radius: rem(100);
+      color: $light;
+
+      @include breakpoint(large) {
+        padding: rem(15) rem(20);
+      }
+
+      svg {
+        $svg_size: rem(20);
+        width: $svg_size;
+        height: $svg_size;
+        color: $light;
+        margin-right: rem(4);
+
+        @include breakpoint(large) {
+          $svg_size: rem(30);
+          width: $svg_size;
+          height: $svg_size;
+        }
+      }
+
+      p {
+        font-size: rem(14);
+        display: flex;
+        align-items: center;
+        gap: rem(5);
+
+        @include breakpoint(large) {
+          font-size: rem(20);
+        }
+      }
+    }
+  }
+}

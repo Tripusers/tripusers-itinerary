@@ -1,0 +1,79 @@
+@use "@/app/scss/functions" as *;
+
+//*----> variables
+
+//*----> fonts
+
+$roboto: var(--font-roboto), sans-serif;
+$cookie: var(--font-cookie), cursive;
+
+@mixin cookie {
+  font-family: $cookie;
+  font-weight: 100;
+}
+
+//*----> colors
+
+$light: #f5f5f7;
+$offLight: rgba(230, 230, 230, 0.99);
+$dark: #1d1d1f;
+$yellow: #fd8f04;
+$red: #fa0001;
+$greenLight: #a4f8b8;
+$green: #044914;
+
+$c-bg: #171715;
+
+$b-radius: rem(20);
+
+$p: rem(10);
+$p-l: rem(20);
+$p-s: rem(5) rem(10);
+
+//*----> easing
+
+$e_quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+//*----> background animation
+
+@mixin bg_animation {
+  background-color: $dark;
+  background: linear-gradient(90deg, $yellow, $red, $yellow);
+  background-size: 200%;
+  animation: skeleton 1s infinite linear;
+
+  @keyframes skeleton {
+    from {
+      background-position: -100% 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
+  }
+}
+
+//*----> full_width
+
+@mixin full_width {
+  width: 100vw;
+  max-width: 100%;
+  padding: 0 4vw;
+
+  @media screen and (min-width: 1025px) {
+    padding: 0 12vw;
+  }
+}
+
+/*
+//*---------->> Tablet
+
+@media screen and (min-width: 820px){
+
+}
+
+//*---------->> desktop
+
+@media screen and (min-width: 1025px){
+
+}
+ */

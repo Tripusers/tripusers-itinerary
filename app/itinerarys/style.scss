@@ -2,13 +2,13 @@
 @use "@/app/scss/functions" as *;
 
 #itinerarys_empty {
-  @include full_width;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: rem(5);
+  @include full_width;
+  height: 100vh;
 }
 
 #itinerarys_auth {
@@ -63,7 +63,6 @@
   gap: rem(20);
 
   .itinerarys_header {
-    @include full_width;
     @include full_width;
     background-color: $dark;
     height: 40vh;

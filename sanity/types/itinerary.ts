@@ -5,10 +5,12 @@ import { PortableTextBlock } from "sanity";
 export type Itinerary = {
     _id: string;
     _createdAt: string;
+    title: string;
     clientName: string;
     clientNumber?: string;
     tripTo: string;
     date: string;
+    deal?: string;
     adults?: number;
     children?: number;
     infant?: number;
@@ -21,7 +23,7 @@ export type Itinerary = {
     };
     days: number;
     nights?: number;
-    title: string;
+    itineraryTitle: string;
     activities?: number;
     hotels?: number;
     price: number;

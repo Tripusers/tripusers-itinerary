@@ -1,10 +1,13 @@
 import Header from "@/components/header/Header";
+import { ToastProvider } from "@/context/toastContext";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
-      <main>{children}</main>
+      <ToastProvider>
+        <Header />
+        <main>{children}</main>
+      </ToastProvider>
     </>
   );
 }

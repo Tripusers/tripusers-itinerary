@@ -2,13 +2,13 @@ import { CalendarDays } from "lucide-react";
 import "./styles.scss";
 
 type ItineraryHeroProps = {
-  hero_image: string | undefined;
-  clientName: string | undefined;
-  tripTo: string | undefined;
-  startDate: string | undefined;
-  noOfAdults: number | undefined;
-  noOfChilderm: number | undefined;
-  noOfInfants: number | undefined;
+  hero_image?: string;
+  clientName?: string;
+  tripTo?: string;
+  startDate?: string;
+  noOfAdults?: number;
+  noOfChilderm?: number;
+  noOfInfants?: number;
 };
 
 const ItineraryHero = ({
@@ -17,8 +17,8 @@ const ItineraryHero = ({
   tripTo = "Paris",
   startDate = "2024-01-01",
   noOfAdults = 2,
-  noOfChilderm = 1,
-  noOfInfants = 1,
+  noOfChilderm,
+  noOfInfants,
 }: ItineraryHeroProps) => {
   const startDateFormatted = new Date(startDate).toLocaleDateString("en-GB", {
     day: "numeric",

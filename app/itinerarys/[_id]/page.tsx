@@ -1,6 +1,7 @@
 "use client";
 
-import ItineraryHero from "@/components/itinerary/ItineraryHero";
+import ItineraryCard from "@/components/itinerary/card/ItineraryCard";
+import ItineraryHero from "@/components/itinerary/hero/ItineraryHero";
 import PageLoading from "@/components/loader/PageLoading";
 import {
   getAllItinerarys,
@@ -65,6 +66,19 @@ const page = ({ params }: Props) => {
         noOfAdults={itineraryById && itineraryById.adults}
         noOfChilderm={itineraryById && itineraryById.children}
         noOfInfants={itineraryById && itineraryById.infant}
+      />
+      <ItineraryCard
+        cardImage={itineraryById && itineraryById.cardImage.asset.url}
+        deal={itineraryById && itineraryById.deal}
+        days={itineraryById && itineraryById.days}
+        nights={itineraryById && itineraryById.nights}
+        itineraryTitle={itineraryById && itineraryById.itineraryTitle}
+        tripTo={itineraryById && itineraryById.tripTo}
+        priceActual={itineraryById && itineraryById.priceActual}
+        price={itineraryById && itineraryById.price}
+        activities={itineraryById && itineraryById.activities}
+        hotels={itineraryById && itineraryById.hotels}
+        _id={itineraryById && itineraryById._id}
       />
     </>
   );

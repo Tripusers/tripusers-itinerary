@@ -64,6 +64,25 @@ $e_quart: cubic-bezier(0.76, 0, 0.24, 1);
   }
 }
 
+@mixin button {
+  width: 100%;
+  background-color: $yellow;
+  color: $dark;
+  border-radius: rem(10);
+  padding: rem(10) rem(15);
+
+  transition:
+    background-color 0.3s $e_quart,
+    color 0.3s $e_quart;
+
+  @include breakpoint(large) {
+    &:hover {
+      background-color: $dark;
+      color: $light;
+    }
+  }
+}
+
 /*
 //*---------->> Tablet
 

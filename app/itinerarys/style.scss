@@ -2,23 +2,23 @@
 @use "@/app/scss/functions" as *;
 
 #itinerarys_empty {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: rem(5);
   @include full_width;
-  height: 100vh;
 }
 
 #itinerarys_auth {
-  @include full_width;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: $dark;
+  @include full_width;
 
   .auth_container {
     display: flex;
@@ -63,22 +63,22 @@
   gap: rem(20);
 
   .itinerarys_header {
-    @include full_width;
     background-color: $dark;
     height: 40vh;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 0 0 rem(20) rem(20);
+    @include full_width;
 
     @include breakpoint(medium) {
       height: 50vh;
     }
 
     h1 {
-      @include cookie;
       font-size: rem(60);
       color: $light;
+      @include cookie;
 
       @include breakpoint(medium) {
         font-size: rem(80);
@@ -87,11 +87,11 @@
   }
 
   .itinerarys_container {
-    @include full_width;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     gap: rem(20);
+    @include full_width;
 
     @include breakpoint(medium) {
       grid-template-columns: 1fr 1fr;

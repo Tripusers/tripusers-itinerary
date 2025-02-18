@@ -84,28 +84,70 @@ Team Tripusers.com 🚀`;
     return "Upcoming";
   };
 
-  const sendWhatsAppMessage = async () => {
-    const response = await axios({
-      url: "https://graph.facebook.com/v22.0/601873959668159/messages",
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_WHATSAPP_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        messaging_product: "whatsapp",
-        to: "918983232072",
-        type: "template",
-        template: {
-          name: "hello_world",
-          language: {
-            code: "en_US",
-          },
+  const sendWhatsAppMessage = async (itinerary: Itinerary) => {
+    try {
+      const response = await axios({
+        url: "https://graph.facebook.com/v22.0/601873959668159/messages",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WHATSAPP_API_KEY}`,
+          "Content-Type": "application/json",
         },
-      }),
-    });
+        data: JSON.stringify({
+          messaging_product: "whatsapp",
+          to: "919209803895",
+          type: "template",
+          template: {
+            name: "tripusers_test",
+            language: {
+              code: "en_IN",
+            },
+            components: [
+              {
+                type: "header",
+                parameters: [
+                  {
+                    type: "text",
+                    text: `${itinerary.clientName}`,
+                  },
+                ],
+              },
+              {
+                type: "body",
+                parameters: [
+                  {
+                    type: "text",
+                    text: `${itinerary._id}`,
+                  },
+                ],
+              },
+              {
+                type: "button",
+                sub_type: "URL",
+                index: "0",
+                parameters: [
+                  {
+                    type: "text",
+                    text: `${itinerary._id}`,
+                  },
+                ],
+              },
+            ],
+          },
+        }),
+      });
 
-    console.log("response: ", response.data);
+      if (response.data.messages?.[0]?.message_status === "accepted") {
+        addToast(
+          `Message sent successfully! to ${itinerary.clientName}`,
+          "success"
+        );
+      }
+      console.log("response: ", response.data);
+    } catch (error) {
+      console.error("Error sending WhatsApp message:", error);
+      addToast("Failed to send WhatsApp message", "error");
+    }
   };
 
   console.log("allItinerarys: ", allItinerarys);
@@ -166,7 +208,7 @@ Team Tripusers.com 🚀`;
               </button>
               <button
                 className="itinerary_button"
-                onClick={sendWhatsAppMessage}
+                onClick={() => sendWhatsAppMessage(itinerary)}
               >
                 Send
               </button>

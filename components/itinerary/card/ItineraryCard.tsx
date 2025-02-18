@@ -1,7 +1,9 @@
-import { Check, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { RiHotelFill, RiLandscapeFill } from "react-icons/ri";
+import { FaCarAlt, FaPlane } from "react-icons/fa";
 
 type ItineraryCardProps = {
   cardImage?: string;
@@ -12,8 +14,10 @@ type ItineraryCardProps = {
   tripTo?: string;
   priceActual?: number;
   price?: number;
-  activities?: number;
-  hotels?: number;
+  isHotels?: boolean;
+  isFlight?: boolean;
+  isTransfer?: boolean;
+  isSightseeing?: boolean;
   _id?: string;
 };
 
@@ -26,8 +30,11 @@ const ItineraryCard = ({
   tripTo = "Paris",
   priceActual,
   price = 1500,
-  activities,
-  hotels,
+  isHotels,
+  isFlight,
+  isTransfer,
+  isSightseeing,
+
   _id,
 }: ItineraryCardProps) => {
   const router = useRouter();
@@ -53,7 +60,7 @@ const ItineraryCard = ({
               </p>
             </div>
             <h1>{itineraryTitle}</h1>
-            <p className="subtitle">
+            <p>
               {days}D {tripTo}
             </p>
           </div>
@@ -69,16 +76,28 @@ const ItineraryCard = ({
               <span className="price">₹ {price}</span>
             </p>
             <div className="activities_container">
-              {activities && (
+              {isHotels && (
                 <p>
-                  <Check />
-                  {activities} Activities
+                  <RiHotelFill />
+                  Hotels
                 </p>
               )}
-              {hotels && (
+              {isFlight && (
                 <p>
-                  <Check />
-                  {hotels} Hotels
+                  <FaPlane />
+                  Flight
+                </p>
+              )}
+              {isTransfer && (
+                <p>
+                  <FaCarAlt />
+                  Transfer
+                </p>
+              )}
+              {isSightseeing && (
+                <p>
+                  <RiLandscapeFill />
+                  Sightseeing
                 </p>
               )}
             </div>

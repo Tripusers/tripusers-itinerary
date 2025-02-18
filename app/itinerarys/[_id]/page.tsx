@@ -76,8 +76,10 @@ const page = ({ params }: Props) => {
         tripTo={itineraryById && itineraryById.tripTo}
         priceActual={itineraryById && itineraryById.priceActual}
         price={itineraryById && itineraryById.price}
-        activities={itineraryById && itineraryById.activities}
-        hotels={itineraryById && itineraryById.hotels}
+        isHotels={itineraryById && itineraryById.isHotels}
+        isFlight={itineraryById && itineraryById.isFlight}
+        isTransfer={itineraryById && itineraryById.isTransfer}
+        isSightseeing={itineraryById && itineraryById.isSightseeing}
         _id={itineraryById && itineraryById._id}
       />
     </>

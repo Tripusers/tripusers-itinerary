@@ -160,8 +160,10 @@ export async function getItineraryById(itineraryId: string): Promise<Itinerary> 
           days,
           nights,
           itineraryTitle,
-          activities,
-          hotels,
+          isHotels,
+          isFlight,
+          isTransfer,
+          isSightseeing,
           price,
           priceActual,
           "coverImages": coverImages[] {

@@ -28,7 +28,25 @@ $bg_color: $light;
 
   a {
     @include breakpoint(medium) {
+      box-shadow: rgba(0, 0, 0, 0.35) 0 rem(5) rem(15);
+      border-radius: rem(10);
       display: flex;
+    }
+
+    @include breakpoint(large) {
+      transition: transform 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(rem(-10));
+
+        .top {
+          border-color: $yellow;
+        }
+
+        .bottom {
+          border-color: $yellow;
+        }
+      }
     }
 
     .top {
@@ -144,6 +162,11 @@ $bg_color: $light;
         h1 {
           font-size: rem(18);
         }
+        .subtitle {
+          @include breakpoint(medium) {
+            margin-top: rem(10);
+          }
+        }
       }
 
       .gap {
@@ -226,6 +249,8 @@ $bg_color: $light;
 
           .price_actual {
             text-decoration: line-through;
+            opacity: 0.5;
+            font-weight: 400;
           }
 
           .price {

@@ -72,7 +72,7 @@ $e_quart: cubic-bezier(0.76, 0, 0.24, 1);
   padding: rem(10) rem(15);
 
   transition:
-    background-color 0.3s $e_quart,
+    background-color 0.2s $e_quart,
     color 0.3s $e_quart;
 
   @include breakpoint(large) {

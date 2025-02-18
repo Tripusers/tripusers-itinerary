@@ -53,7 +53,7 @@ const ItineraryCard = ({
               </p>
             </div>
             <h1>{itineraryTitle}</h1>
-            <p>
+            <p className="subtitle">
               {days}D {tripTo}
             </p>
           </div>

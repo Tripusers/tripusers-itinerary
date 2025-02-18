@@ -34,29 +34,6 @@ export default function Page() {
     }
   };
 
-  const copyMessage = (itinerary: Itinerary) => {
-    const message = `Hi *${itinerary.clientName}*! 🌟
-
-Your adventure dreams are coming true! 🎉
-Check out your personalised itinerary tailored just for you. Click the link below to dive into the excitement and start planning your unforgettable journey!
-
-🔗 ${process.env.NEXT_PUBLIC_BASE_URL}/itinerarys/${itinerary._id}
-
-Your Travel Expert
-*Risha*
-Team Tripusers.com 🚀`;
-
-    navigator.clipboard
-      .writeText(message)
-      .then(() => {
-        addToast("Message copied to clipboard!", "success");
-      })
-      .catch((err) => {
-        console.error("Failed to copy message:", err);
-        addToast("Failed to copy message", "error");
-      });
-  };
-
   useEffect(() => {
     fetchItinerarys();
   }, []);
@@ -95,7 +72,7 @@ Team Tripusers.com 🚀`;
         },
         data: JSON.stringify({
           messaging_product: "whatsapp",
-          to: "919209803895",
+          to: `${itinerary.clientNumber}`,
           type: "template",
           template: {
             name: "tripusers_test",

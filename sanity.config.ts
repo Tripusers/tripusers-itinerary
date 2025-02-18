@@ -9,7 +9,6 @@ const config = defineConfig({
   title: "tripusers.com",
   apiVersion: "2024-01-24",
   basePath: "/studio",
-
   plugins: [structureTool(), visionTool(), unsplashImageAsset()],
   useCdn: false,
 });

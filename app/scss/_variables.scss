@@ -64,6 +64,28 @@ $e_quart: cubic-bezier(0.76, 0, 0.24, 1);
   }
 }
 
+@mixin full_width_itinerary {
+  width: 100vw;
+  max-width: 100%;
+  padding: 0 4vw;
+
+  @include breakpoint(medium) {
+    padding-inline: 10vw;
+  }
+
+  @include breakpoint(large) {
+    padding-inline: 18vw;
+  }
+
+  @include breakpoint(xlarge) {
+    padding-inline: 20vw;
+  }
+
+  @include breakpoint(xxlarge) {
+    padding-inline: 30vw;
+  }
+}
+
 @mixin button {
   width: 100%;
   background-color: $yellow;

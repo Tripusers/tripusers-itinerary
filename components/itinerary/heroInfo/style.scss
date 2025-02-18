@@ -1,0 +1,95 @@
+@use "@/app/scss/variables" as *;
+@use "@/app/scss/functions" as *;
+
+#HeroInfo {
+  @include full_width;
+  margin-top: rem(100);
+  margin-bottom: rem(80);
+
+  @include breakpoint(medium) {
+    padding-inline: 10vw;
+  }
+
+  @include breakpoint(large) {
+    padding-inline: 18vw;
+  }
+
+  @include breakpoint(xlarge) {
+    padding-inline: 20vw;
+  }
+
+  @include breakpoint(xxlarge) {
+    padding-inline: 30vw;
+  }
+
+  .info_container {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+
+    .line {
+      width: 100%;
+      height: rem(1);
+      margin-bottom: rem(80);
+
+      background-image: linear-gradient(
+        90deg,
+        #919191 33%,
+        hsla(0, 0%, 100%, 0) 0
+      );
+      background-position: bottom;
+      background-size: rem(14) rem(2);
+      background-repeat: repeat-x;
+    }
+
+    .info_container_info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: rem(20);
+
+      @include breakpoint(medium) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+
+      @include breakpoint(medium) {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      img {
+        $size: rem(50);
+        width: $size;
+        height: $size;
+
+        @include breakpoint(large) {
+          $size: rem(40);
+          width: $size;
+          height: $size;
+        }
+      }
+
+      p {
+        display: flex;
+        flex-direction: column;
+        font-size: rem(16);
+        opacity: 0.8;
+
+        span {
+          opacity: 1;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .explore {
+      margin-top: rem(20);
+      font-size: rem(18);
+    }
+  }
+}

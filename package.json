@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@portabletext/react": "^3.2.1",
     "@sanity/vision": "^3.75.0",
     "axios": "^1.7.9",
     "lucide-react": "^0.475.0",

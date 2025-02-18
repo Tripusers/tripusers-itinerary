@@ -3,6 +3,7 @@ import { createClient, groq } from "next-sanity";
 import { config } from "./config/client-config";
 import { Itinerary } from "./types/itinerary";
 import { brand } from "./types/brant";
+import { heroInfo } from "./types/heroInfo";
 
 
 //* ---------------------> Brand
@@ -19,6 +20,20 @@ export async function getBrand(): Promise<brand[]> {
     }`
   );
 }
+
+
+export async function getHeroInfo(): Promise<heroInfo[]> {
+  return createClient(config).fetch(
+    groq`*[_type == "heroInfo"] | order(_createdAt asc) {
+      _id,
+      _createdAt,
+      subtitle,
+      title,
+      "icon": icon.asset->url,
+    }`
+  );
+}
+
 //* ---------------------> Testimonials
 
 export async function getAllTestimonials(): Promise<Testimonial[]> {
@@ -37,6 +52,7 @@ export async function getAllTestimonials(): Promise<Testimonial[]> {
             },
             rating,
             shortReview,
+            fullReview,
             "hashtags": hashtags[] {
                 name,
             },
@@ -236,5 +252,51 @@ export async function getItineraryById(itineraryId: string): Promise<Itinerary> 
           }
         }`,
     { itineraryId }
+  );
+}
+
+//* ---------------------> Itinerary Hero by id
+
+export async function getItineraryHeroById(
+  itineraryId: string
+): Promise<Itinerary> {
+  return createClient(config).fetch(
+    groq`*[_type == "clientItinerarys" && _id == $itineraryId][0] {
+      _id,
+      _createdAt,
+      "cardImage": cardImage{asset->{url, _id}, hotspot, crop},
+      clientName,
+      tripTo,
+      date,
+      adults,
+      children,
+      infant,
+    }`,
+    { itineraryId }
+  );
+}
+
+//* ---------------------> Itinerary Card by id
+
+export async function getItineraryCardById(
+  itineraryId: string
+): Promise<Itinerary> {
+  return createClient(config).fetch(
+    groq`*[_type == "clientItinerarys" && _id == $itineraryId][0] {
+      _id,
+      _createdAt,
+      "cardImage": cardImage{asset->{url, _id}, hotspot, crop},
+      deal,
+      days,
+      nights,
+      itineraryTitle,
+      tripTo,
+      price,
+      priceActual,
+      isHotels,
+      isFlight,
+      isTransfer,
+      isSightseeing,
+    }`,
   );
 }

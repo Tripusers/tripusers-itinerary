@@ -108,10 +108,10 @@ $bg_color: $light;
 
     .bottom {
       width: 100%;
+      background-color: $bg_color;
 
       @include breakpoint(medium) {
         width: 60%;
-        background-color: $bg_color;
         border-radius: 0 rem(10) rem(10) 0;
         border-right: rem(1) solid $dark;
         border-bottom: rem(1) solid $dark;
@@ -178,7 +178,8 @@ $bg_color: $light;
         overflow: hidden;
 
         @include breakpoint(medium) {
-          display: none;
+          //display: none;
+          padding-inline: rem(10);
         }
 
         .line {
@@ -187,7 +188,7 @@ $bg_color: $light;
 
           background-image: linear-gradient(
             90deg,
-            #d7d7d7 33%,
+            #c7c7c7 33%,
             hsla(0, 0%, 100%, 0) 0
           );
           background-position: bottom;
@@ -202,6 +203,10 @@ $bg_color: $light;
           border: rem(1) solid $dark;
           position: absolute;
           background-color: $light;
+
+          @include breakpoint(medium) {
+            display: none;
+          }
         }
 
         .c_top {

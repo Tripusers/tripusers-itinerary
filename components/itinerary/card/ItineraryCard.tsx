@@ -4,64 +4,40 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { RiHotelFill, RiLandscapeFill } from "react-icons/ri";
 import { FaCarAlt, FaPlane } from "react-icons/fa";
+import { Itinerary } from "@/sanity/types/itinerary";
 
-type ItineraryCardProps = {
-  cardImage?: string;
-  deal?: string;
-  days?: number;
-  nights?: number;
-  itineraryTitle?: string;
-  tripTo?: string;
-  priceActual?: number;
-  price?: number;
-  isHotels?: boolean;
-  isFlight?: boolean;
-  isTransfer?: boolean;
-  isSightseeing?: boolean;
-  _id?: string;
+type Props = {
+  data: Itinerary | undefined;
 };
 
-const ItineraryCard = ({
-  cardImage,
-  deal,
-  days = 0,
-  nights,
-  itineraryTitle = "Itinerary Title",
-  tripTo = "Paris",
-  priceActual,
-  price = 1500,
-  isHotels,
-  isFlight,
-  isTransfer,
-  isSightseeing,
-
-  _id,
-}: ItineraryCardProps) => {
+const ItineraryCard = ({ data }: Props) => {
   const router = useRouter();
 
   return (
     <section id="itinerary_card">
-      <Link href={`/itinerarys/${_id}/${_id}`}>
+      <Link href={`/itinerarys/${data?._id}/${data?._id}`}>
         <div className="top">
           <div className="img_container">
-            <img src={cardImage} alt="itinerary card image" />
-            {deal && <p>{deal}</p>}
+            {data?.cardImage.asset.url && (
+              <img src={data.cardImage.asset.url} alt="itinerary card image" />
+            )}
+            {data?.deal && <p>{data.deal}</p>}
           </div>
         </div>
         <div className="bottom">
           <div className="top_details_container">
             <div className="day_night_container">
               <p>
-                {days}D <Sun />
-                {nights && " | "}
-                {nights && nights}
-                {nights && "N"}
-                {nights && <Moon />}
+                {data?.days}D <Sun />
+                {data?.nights && " | "}
+                {data?.nights && data?.nights}
+                {data?.nights && "N"}
+                {data?.nights && <Moon />}
               </p>
             </div>
-            <h1>{itineraryTitle}</h1>
+            <h1>{data?.itineraryTitle}</h1>
             <p>
-              {days}D {tripTo}
+              {data?.days}D {data?.tripTo}
             </p>
           </div>
           <div className="gap">
@@ -72,36 +48,40 @@ const ItineraryCard = ({
 
           <div className="bottom_bottom_container">
             <p className="price_container">
-              <span className="price_actual">₹ {priceActual}</span>{" "}
-              <span className="price">₹ {price}</span>
+              <span className="price_actual">₹ {data?.priceActual}</span>{" "}
+              <span className="price">₹ {data?.price}</span>
             </p>
             <div className="activities_container">
-              {isHotels && (
+              {data?.isHotels && (
                 <p>
                   <RiHotelFill />
                   Hotels
                 </p>
               )}
-              {isFlight && (
+              {data?.isFlight && (
                 <p>
                   <FaPlane />
                   Flight
                 </p>
               )}
-              {isTransfer && (
+              {data?.isTransfer && (
                 <p>
                   <FaCarAlt />
                   Transfer
                 </p>
               )}
-              {isSightseeing && (
+              {data?.isSightseeing && (
                 <p>
                   <RiLandscapeFill />
                   Sightseeing
                 </p>
               )}
             </div>
-            <button onClick={() => router.push(`/itinerarys/${_id}/${_id}`)}>
+            <button
+              onClick={() =>
+                router.push(`/itinerarys/${data?._id}/${data?._id}`)
+              }
+            >
               View Itinerary
             </button>
           </div>

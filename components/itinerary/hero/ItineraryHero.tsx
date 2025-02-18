@@ -1,26 +1,15 @@
 import { CalendarDays } from "lucide-react";
 import "./styles.scss";
+import { Itinerary } from "@/sanity/types/itinerary";
 
-type ItineraryHeroProps = {
-  hero_image?: string;
-  clientName?: string;
-  tripTo?: string;
-  startDate?: string;
-  noOfAdults?: number;
-  noOfChilderm?: number;
-  noOfInfants?: number;
+type Props = {
+  data: Itinerary | undefined;
 };
 
-const ItineraryHero = ({
-  hero_image,
-  clientName = "John",
-  tripTo = "Paris",
-  startDate = "2024-01-01",
-  noOfAdults = 2,
-  noOfChilderm,
-  noOfInfants,
-}: ItineraryHeroProps) => {
-  const startDateFormatted = new Date(startDate).toLocaleDateString("en-GB", {
+const ItineraryHero = ({ data }: Props) => {
+  if (!data) return null;
+
+  const startDateFormatted = new Date(data.date).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -29,25 +18,29 @@ const ItineraryHero = ({
   return (
     <section id="itinerary_hero">
       <div className="dark_fade" />
-      {hero_image && (
-        <img id="hero_image" src={hero_image} alt="itinerary hero image" />
+      {data.cardImage.asset.url && (
+        <img
+          id="hero_image"
+          src={data.cardImage.asset.url}
+          alt="itinerary hero image"
+        />
       )}
       <div className="hero_content">
-        <h1>{clientName}'s Trip To</h1>
-        <h2>{tripTo}</h2>
+        <h1>{data.clientName}'s Trip To</h1>
+        <h2>{data.tripTo}</h2>
         <div className="date_container">
           <CalendarDays strokeWidth={1.6} />
           <p>
             <span>{startDateFormatted}</span>|
             <span>
-              {noOfAdults} Adults{noOfChilderm && ","}
+              {data.adults} Adults{data.children && ","}
             </span>
-            {noOfChilderm && (
+            {data.children && (
               <span>
-                {noOfChilderm} Children{noOfInfants && ","}
+                {data.children} Children{data.infant && ","}
               </span>
             )}
-            {noOfInfants && <span>{noOfInfants} Infants</span>}
+            {data.infant && <span>{data.infant} Infants</span>}
           </p>
         </div>
       </div>

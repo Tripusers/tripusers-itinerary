@@ -116,7 +116,7 @@ export default function Page() {
 
       if (response.data.messages?.[0]?.message_status === "accepted") {
         addToast(
-          `Message sent successfully! to ${itinerary.clientName}`,
+          `Message sent successfully! to ${itinerary.clientName} : ${itinerary.clientNumber}`,
           "success"
         );
       }

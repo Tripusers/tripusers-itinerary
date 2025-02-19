@@ -1,4 +1,4 @@
-import { Crop, Hotspot } from "./types";
+import { ImagePropsSanity } from "./imageProps";
 import { PortableTextBlock } from "sanity";
 
 
@@ -14,13 +14,7 @@ export type Itinerary = {
     adults?: number;
     children?: number;
     infant?: number;
-    cardImage: {
-        asset: {
-            url: string;
-        };
-        hotspot: Hotspot;
-        crop: Crop;
-    };
+    cardImage: ImagePropsSanity;
     days: number;
     nights?: number;
     itineraryTitle: string;
@@ -30,18 +24,8 @@ export type Itinerary = {
     isSightseeing?: boolean;
     price: number;
     priceActual: number;
-    coverImages: {
-        _id: string;
-        url: string;
-        hotspot: Hotspot;
-        crop: Crop;
-    }[];
-    placeImages: {
-        _id: string;
-        url: string;
-        hotspot: Hotspot;
-        crop: Crop;
-    }[];
+    coverImages: ImagePropsSanity[];
+    placeImages: ImagePropsSanity[];
     inclusion: PortableTextBlock[];
     itinerary: {
         title: string;
@@ -52,22 +36,12 @@ export type Itinerary = {
             title: string;
             duration?: string;
             ticketIncluded?: boolean;
-            images: {
-                _id: string;
-                url: string;
-                hotspot: Hotspot;
-                crop: Crop;
-            }[];
+            images: ImagePropsSanity[];
             description?: PortableTextBlock[];
             experiences?: {
                 title: string;
                 images: {
-                    image: {
-                        _id: string;
-                        url: string;
-                        hotspot: Hotspot;
-                        crop: Crop;
-                    };
+                    image: ImagePropsSanity;
                     caption?: string;
                 }[];
             };

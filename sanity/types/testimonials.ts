@@ -1,4 +1,5 @@
 import { PortableTextBlock } from "sanity";
+import { ImagePropsSanity } from "./imageProps";
 
 export type Testimonial = {
     _id: string;
@@ -9,48 +10,17 @@ export type Testimonial = {
     };
     reviewDate: Date;
     tripTo: string;
-    cardImage: {
-        asset: {
-            url: string;
-        };
-        hotspot: {
-            height: number;
-            width: number;
-            x: number;
-            y: number;
-        };
-        crop: {
-            right: number;
-            top: number;
-            left: number;
-            bottom: number;
-        };
-    };
+    cardImage: ImagePropsSanity;
     profile: {
         name: string;
-        image: string;
+        image: ImagePropsSanity;
     };
     rating: string;
     shortReview: string;
     hashtags?: {
         name: string;
     }[];
-    images: {
-        _id: string;
-        url: string;
-        hotspot: {
-            height: number;
-            width: number;
-            x: number;
-            y: number;
-        };
-        crop: {
-            right: number;
-            top: number;
-            left: number;
-            bottom: number;
-        };
-    }[];
+    images: ImagePropsSanity[];
     fullReview: PortableTextBlock[];
 };
 

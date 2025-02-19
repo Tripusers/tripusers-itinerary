@@ -45,10 +45,10 @@ export async function getAllTestimonials(): Promise<Testimonial[]> {
             "slug": slug.current,
             reviewDate,
             tripTo,
-            "cardImage": cardImage{asset->{url},hotspot,crop},
+            "cardImage": cardImage{asset->{url, _id, metadata}, hotspot, crop},
             "profile": profile {
                 name,
-                "image": image.asset->url,
+                "image": image{asset->{url, _id, metadata}, hotspot, crop},
             },
             rating,
             shortReview,
@@ -76,7 +76,7 @@ export async function getAllItinerarys(): Promise<Itinerary[]> {
           adults,
           children,
           infant,
-          "cardImage": cardImage{asset->{url, _id}, hotspot, crop},
+          "cardImage": cardImage{asset->{url, _id, metadata}, hotspot, crop},
           days,
           nights,
           itineraryTitle,
@@ -93,6 +93,7 @@ export async function getAllItinerarys(): Promise<Itinerary[]> {
           "placeImages": placeImages[] {
             "_id": asset->_id,
             "url": asset->url,
+            "metadata": asset->metadata,
             hotspot,
             crop,
           },
@@ -116,7 +117,7 @@ export async function getAllItinerarys(): Promise<Itinerary[]> {
               experiences {
                 title,
                 "images": images[] {
-                  "image": image{asset->{url, _id}, hotspot, crop},
+                  "image": image{asset->{url, _id, metadata}, hotspot, crop},
                   caption,
                 }
               }
@@ -172,7 +173,7 @@ export async function getItineraryById(itineraryId: string): Promise<Itinerary> 
           adults,
           children,
           infant,
-          "cardImage": cardImage{asset->{url, _id}, hotspot, crop},
+          "cardImage": cardImage{asset->{url, _id, metadata}, hotspot, crop},
           days,
           nights,
           itineraryTitle,
@@ -185,12 +186,14 @@ export async function getItineraryById(itineraryId: string): Promise<Itinerary> 
           "coverImages": coverImages[] {
             "_id": asset->_id,
             "url": asset->url,
+            "metadata": asset->metadata,
             hotspot,
             crop,
           },
           "placeImages": placeImages[] {
             "_id": asset->_id,
             "url": asset->url,
+            "metadata": asset->metadata,
             hotspot,
             crop,
           },
@@ -207,6 +210,7 @@ export async function getItineraryById(itineraryId: string): Promise<Itinerary> 
               "images": images[] {
                 "_id": asset->_id,
                 "url": asset->url,
+                "metadata": asset->metadata,
                 hotspot,
                 crop,
               },
@@ -214,7 +218,7 @@ export async function getItineraryById(itineraryId: string): Promise<Itinerary> 
               experiences {
                 title,
                 "images": images[] {
-                  "image": image{asset->{url, _id}, hotspot, crop},
+                  "image": image{asset->{url, _id, metadata}, hotspot, crop},
                   caption,
                 }
               }
@@ -264,7 +268,7 @@ export async function getItineraryHeroById(
     groq`*[_type == "clientItinerarys" && _id == $itineraryId][0] {
       _id,
       _createdAt,
-      "cardImage": cardImage{asset->{url, _id}, hotspot, crop},
+      "cardImage": cardImage{asset->{url, _id, metadata}, hotspot, crop},
       clientName,
       tripTo,
       date,
@@ -285,7 +289,7 @@ export async function getItineraryCardById(
     groq`*[_type == "clientItinerarys" && _id == $itineraryId][0] {
       _id,
       _createdAt,
-      "cardImage": cardImage{asset->{url, _id}, hotspot, crop},
+      "cardImage": cardImage{asset->{url, _id, metadata}, hotspot, crop},
       deal,
       days,
       nights,

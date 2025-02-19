@@ -1,6 +1,7 @@
 import { CalendarDays } from "lucide-react";
 import "./styles.scss";
 import { Itinerary } from "@/sanity/types/itinerary";
+import OptImage from "@/components/commmon/OptImage";
 
 type Props = {
   data: Itinerary | undefined;
@@ -19,10 +20,11 @@ const ItineraryHero = ({ data }: Props) => {
     <section id="itinerary_hero">
       <div className="dark_fade" />
       {data.cardImage.asset.url && (
-        <img
-          id="hero_image"
-          src={data.cardImage.asset.url}
+        <OptImage
+          image={data.cardImage}
           alt="itinerary hero image"
+          className="hero_image"
+          width={1500}
         />
       )}
       <div className="hero_content">

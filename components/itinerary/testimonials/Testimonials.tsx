@@ -2,6 +2,7 @@ import { FaHeart } from "react-icons/fa";
 import "./style.scss";
 import Testimonial from "@/sanity/types/testimonials";
 import { PortableText } from "@portabletext/react";
+import OptImage from "@/components/commmon/OptImage";
 
 type Props = {
   data: Testimonial[];
@@ -76,7 +77,7 @@ const Testimonials = ({ data }: Props) => {
         {randomTestimonials.map((testimonial) => (
           <div className="testimonial_card" key={testimonial._id}>
             <div className="title_container">
-              <img src={testimonial.profile.image} alt="" />
+              <OptImage image={testimonial.profile.image} alt="testimonial profile image" width={100} sizes="avatar"/>
               <div className="right">
                 <h4>{testimonial.profile.name}</h4>
                 <p>{startDateFormatted(testimonial.reviewDate)}</p>

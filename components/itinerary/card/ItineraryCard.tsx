@@ -5,6 +5,7 @@ import Link from "next/link";
 import { RiHotelFill, RiLandscapeFill } from "react-icons/ri";
 import { FaCarAlt, FaPlane } from "react-icons/fa";
 import { Itinerary } from "@/sanity/types/itinerary";
+import OptImage from "@/components/commmon/OptImage";
 
 type Props = {
   data: Itinerary | undefined;
@@ -19,7 +20,7 @@ const ItineraryCard = ({ data }: Props) => {
         <div className="top">
           <div className="img_container">
             {data?.cardImage.asset.url && (
-              <img src={data.cardImage.asset.url} alt="itinerary card image" />
+              <OptImage image={data.cardImage} alt="itinerary card image" width={800} sizes="card" />
             )}
             {data?.deal && <p>{data.deal}</p>}
           </div>

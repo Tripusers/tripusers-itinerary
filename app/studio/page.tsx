@@ -72,7 +72,7 @@ export default function Page() {
         },
         data: JSON.stringify({
           messaging_product: "whatsapp",
-          to: `${itinerary.clientNumber}`,
+          to: "918983232072",
           type: "template",
           template: {
             name: "tripusers_test",

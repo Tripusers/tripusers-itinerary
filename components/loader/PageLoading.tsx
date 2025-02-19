@@ -9,7 +9,7 @@ const PageLoading = () => {
   return (
     <section id="PageLoading">
       <div className="img-container">
-        <Image src={logo} alt="logo" fill sizes={ImageSize.cardSize} />
+        <Image src={logo} alt="logo" fill sizes={ImageSize.card} />
       </div>
       <div className="loader-container">
         <div className="dot" />

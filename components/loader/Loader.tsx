@@ -58,7 +58,7 @@ const Loader = () => {
                 src={logoAnim}
                 alt="loading animation"
                 fill
-                sizes={ImageSize.cardSize}
+                sizes={ImageSize.card}
                 fetchPriority="high"
               />
             </div>
@@ -67,7 +67,7 @@ const Loader = () => {
                 src={travelAnim}
                 alt="loading animation"
                 fill
-                sizes={ImageSize.cardSize}
+                sizes={ImageSize.card}
                 fetchPriority="high"
               />
             </div>

@@ -56,14 +56,14 @@ const Testimonials = ({ data }: Props) => {
 
   const randomTestimonials = data.sort(() => Math.random() - 0.5).slice(0, 4);
 
-  const startDateFormatted = (date: Date) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString("en-GB", {
+  const startDateFormatted = (date: Date) =>
+    new Date(date).toLocaleDateString("en-GB", {
       day: "numeric",
       month: "short",
       year: "numeric",
     });
-  };
+
+  // create a const data with
 
   return (
     <section id="Testimonials">
@@ -77,7 +77,12 @@ const Testimonials = ({ data }: Props) => {
         {randomTestimonials.map((testimonial) => (
           <div className="testimonial_card" key={testimonial._id}>
             <div className="title_container">
-              <OptImage image={testimonial.profile.image} alt="testimonial profile image" width={100} sizes="avatar"/>
+              <OptImage
+                image={testimonial.profile.image}
+                alt="testimonial profile image"
+                width={100}
+                size="avatar"
+              />
               <div className="right">
                 <h4>{testimonial.profile.name}</h4>
                 <p>{startDateFormatted(testimonial.reviewDate)}</p>

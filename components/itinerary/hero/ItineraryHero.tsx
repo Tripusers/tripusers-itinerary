@@ -24,7 +24,6 @@ const ItineraryHero = ({ data }: Props) => {
           image={data.cardImage}
           alt="itinerary hero image"
           className="hero_image"
-          width={1500}
         />
       )}
       <div className="hero_content">

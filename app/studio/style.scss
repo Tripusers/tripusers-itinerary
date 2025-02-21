@@ -62,6 +62,10 @@
   flex-direction: column;
   gap: rem(20);
 
+  @include breakpoint(xlarge) {
+    gap: rem(40);
+  }
+
   .itinerarys_header {
     background-color: $dark;
     height: 40vh;
@@ -95,6 +99,10 @@
 
     @include breakpoint(medium) {
       grid-template-columns: 1fr 1fr;
+    }
+
+    @include breakpoint(xlarge) {
+      padding-inline: 20vw;
     }
 
     .itinerary_card {

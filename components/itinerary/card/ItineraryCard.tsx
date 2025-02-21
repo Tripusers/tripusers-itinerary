@@ -20,7 +20,12 @@ const ItineraryCard = ({ data }: Props) => {
         <div className="top">
           <div className="img_container">
             {data?.cardImage.asset.url && (
-              <OptImage image={data.cardImage} alt="itinerary card image" width={800} sizes="card" />
+              <OptImage
+                image={data.cardImage}
+                alt="itinerary card image"
+                width={800}
+                size="card"
+              />
             )}
             {data?.deal && <p>{data.deal}</p>}
           </div>

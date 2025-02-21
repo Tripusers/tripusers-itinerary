@@ -23,7 +23,7 @@ type Props = {
   alt: string;
   className?: string;
   mode?: "contain" | "cover";
-  sizes?: "banner" | "card" | "avatar";
+  size?: "banner" | "card" | "avatar";
   loading?: "lazy" | "eager";
   width?: number;
   height?: number;
@@ -34,11 +34,17 @@ const OptImage: React.FC<Props> = ({
   alt,
   className,
   mode = "cover",
-  sizes = "banner",
+  size = "banner",
   loading = "eager",
   width,
   height,
 }) => {
+  const defaultWidth = {
+    banner: 1500,
+    card: 800,
+    avatar: 150,
+  }[size];
+
   return (
     <SanityImage
       id={image.asset._id}
@@ -53,10 +59,10 @@ const OptImage: React.FC<Props> = ({
           : undefined,
       }}
       mode={mode}
-      sizes={`${ImageSize}.${sizes}`}
+      sizes={ImageSize[size]}
       loading={loading}
       preview={image.asset.metadata.lqip}
-      width={width}
+      width={width || defaultWidth}
       height={height}
     />
   );

@@ -3,6 +3,11 @@
 
 #Testimonials {
   @include full_width_itinerary;
+  padding-bottom: rem(20);
+
+  @include breakpoint(medium) {
+    padding-bottom: rem(50);
+  }
 
   .title {
     display: flex;
@@ -33,6 +38,15 @@
     flex-direction: column;
     gap: rem(10);
 
+    @include breakpoint(medium) {
+      margin-top: rem(40);
+      gap: rem(20);
+    }
+
+    @include breakpoint(large) {
+      margin-top: rem(30);
+    }
+
     .testimonial_card {
       background-color: $light;
       padding: rem(10);
@@ -62,6 +76,64 @@
           p {
             font-size: rem(14);
             opacity: 0.8;
+          }
+        }
+      }
+
+      .content_container {
+        margin-top: rem(10);
+        display: flex;
+        flex-direction: column;
+        gap: rem(10);
+
+        .review_images {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-area: 1fr 1fr;
+          gap: rem(10);
+          margin-top: rem(10);
+
+          @include breakpoint(medium) {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+          }
+
+          .img_container {
+            width: 100%;
+            aspect-ratio: 1;
+            position: relative;
+            border-radius: rem(5);
+            overflow: hidden;
+            background-color: $dark;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              object-fit: cover;
+              inset: 0;
+            }
+          }
+        }
+      }
+
+      a {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: rem(10);
+        background-color: $yellow;
+        padding-block: rem(10);
+        border-radius: rem(10);
+        color: $light;
+
+        @include breakpoint(large) {
+          transition: background-color 0.3s $e_quart;
+
+          &:hover {
+            background-color: $dark;
           }
         }
       }

@@ -3,14 +3,15 @@ import "./style.scss";
 import Testimonial from "@/sanity/types/testimonials";
 import { PortableText } from "@portabletext/react";
 import OptImage from "@/components/commmon/OptImage";
+import Link from "next/link";
+import useResponsive from "@/hooks/useResponsive";
+import { useState } from "react";
 
 type Props = {
   data: Testimonial[];
 };
 
-// Utility function to truncate PortableText to a specified word limit
 const truncatePortableText = (blocks: any[], wordLimit: number): any[] => {
-  // Convert PortableText blocks to plain text
   const plainText = blocks
     .reduce((acc, block) => {
       if (block._type === "block" && block.children) {
@@ -23,18 +24,14 @@ const truncatePortableText = (blocks: any[], wordLimit: number): any[] => {
     }, "")
     .trim();
 
-  // Split into words
   const words = plainText.split(/\s+/);
 
-  // If word count is less than or equal to the limit, return the original blocks
   if (words.length <= wordLimit) {
     return blocks;
   }
 
-  // Get the first 100 words and join them with an ellipsis
   const truncatedText = words.slice(0, wordLimit).join(" ") + "...";
 
-  // Return a new PortableText block containing the truncated text.
   return [
     {
       _type: "block",
@@ -52,9 +49,8 @@ const truncatePortableText = (blocks: any[], wordLimit: number): any[] => {
 };
 
 const Testimonials = ({ data }: Props) => {
-  // get random 4 objects from dare
-
-  const randomTestimonials = data.sort(() => Math.random() - 0.5).slice(0, 4);
+  const { isMobile } = useResponsive();
+  const [visibleData, setVisibleData] = useState(4);
 
   const startDateFormatted = (date: Date) =>
     new Date(date).toLocaleDateString("en-GB", {
@@ -63,7 +59,11 @@ const Testimonials = ({ data }: Props) => {
       year: "numeric",
     });
 
-  // create a const data with
+  const handleLoadMore = () => {
+    setVisibleData((prevVisibleData) =>
+      Math.min(prevVisibleData + 4, data.length)
+    );
+  };
 
   return (
     <section id="Testimonials">
@@ -74,31 +74,58 @@ const Testimonials = ({ data }: Props) => {
       <h3>Wanderlust Vibes</h3>
       <p>Our ecstatic customers share their inspiring stories</p>
       <div className="testimonials_container">
-        {randomTestimonials.map((testimonial) => (
-          <div className="testimonial_card" key={testimonial._id}>
-            <div className="title_container">
-              <OptImage
-                image={testimonial.profile.image}
-                alt="testimonial profile image"
-                width={100}
-                size="avatar"
-              />
-              <div className="right">
-                <h4>{testimonial.profile.name}</h4>
-                <p>{startDateFormatted(testimonial.reviewDate)}</p>
-              </div>
-            </div>
-            <div className="content_container">
-              <p>{testimonial.title}</p>
-              <div className="review">
-                <PortableText
-                  value={truncatePortableText(testimonial.fullReview, 50)}
+        {data.slice(0, visibleData).map((testimonial) => {
+          return (
+            <div className="testimonial_card" key={testimonial._id}>
+              <div className="title_container">
+                <OptImage
+                  image={testimonial.profile.image}
+                  alt="testimonial profile image"
+                  width={100}
+                  size="avatar"
                 />
+                <div className="right">
+                  <h4>{testimonial.profile.name}</h4>
+                  <p>{startDateFormatted(testimonial.reviewDate)}</p>
+                </div>
               </div>
+              <div className="content_container">
+                <h4>{testimonial.title}</h4>
+                <div className="review">
+                  <PortableText
+                    value={truncatePortableText(
+                      testimonial.fullReview,
+                      isMobile ? 40 : 60
+                    )}
+                  />
+                </div>
+                <div className="review_images">
+                  {testimonial.images &&
+                    testimonial.images.length > 0 &&
+                    testimonial.images.slice(0, 6).map((image, i) => (
+                      <div
+                        className="img_container"
+                        key={`${image.asset._id}-${i}`}
+                      >
+                        <OptImage image={image} alt="review image" />
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <Link
+                href={`https://www.tripusers.com/testimonials/${testimonial.slug}`}
+              >
+                Read Full Story
+              </Link>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+      {visibleData < data.length && (
+        <button className="load_more" onClick={handleLoadMore}>
+          Load More
+        </button>
+      )}
     </section>
   );
 };

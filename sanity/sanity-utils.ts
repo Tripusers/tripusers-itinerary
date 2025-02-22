@@ -4,7 +4,8 @@ import { config } from "./config/client-config";
 import { Itinerary } from "./types/itinerary";
 import { brand } from "./types/brant";
 import { heroInfo } from "./types/heroInfo";
-
+import { contactUs } from "./types/contact";
+import { footer } from "./types/footer";
 
 //* ---------------------> Brand
 export async function getBrand(): Promise<brand[]> {
@@ -20,7 +21,6 @@ export async function getBrand(): Promise<brand[]> {
     }`
   );
 }
-
 
 export async function getHeroInfo(): Promise<heroInfo[]> {
   return createClient(config).fetch(
@@ -53,6 +53,11 @@ export async function getAllTestimonials(): Promise<Testimonial[]> {
             rating,
             shortReview,
             fullReview,
+            "images": images[] {
+                asset->{_id, url, metadata},
+                hotspot,
+                crop,
+            },
             "hashtags": hashtags[] {
                 name,
             },
@@ -159,8 +164,9 @@ export async function getAllItinerarys(): Promise<Itinerary[]> {
 
 //* ---------------------> Itinerary by id
 
-
-export async function getItineraryById(itineraryId: string): Promise<Itinerary> {
+export async function getItineraryById(
+  itineraryId: string
+): Promise<Itinerary> {
   return createClient(config).fetch(
     groq`*[_type == "clientItinerarys" && _id == $itineraryId][0] {
           _id,
@@ -301,6 +307,51 @@ export async function getItineraryCardById(
       isFlight,
       isTransfer,
       isSightseeing,
-    }`,
+    }`
+  );
+}
+
+
+//* ---------------------> contact us
+
+export async function getContactUsInfo(): Promise<contactUs> {
+  return createClient(config).fetch(
+    groq`*[_type == "contactUs"][0]{
+     _id,
+      _createdAt,
+      title,
+      subtitle,
+      "bannerImage":bannerImage{asset->{_id, url, metadata}, hotspot, crop},
+      formInfo,
+      Address,
+      email,
+      phone,
+      ourOfficesSubtitle,
+      "offices":offices[]{
+        "Address":Address,
+        "place":place
+      }
+    }`
+  );
+}
+
+//* ---------------------> footer
+
+export async function getFooter(): Promise<footer> {
+  return createClient(config).fetch(
+    groq`*[_type == 'footer'][0]{
+      _id,
+      _createdAt,
+      title,
+      location,
+      locationSubtitle,
+      phone,
+      phoneSubtitle,
+      email,
+      emailSubtitle,
+      facebook,
+      instagram,
+      twitter,
+    }`
   );
 }

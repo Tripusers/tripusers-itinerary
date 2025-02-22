@@ -1,10 +1,15 @@
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import { SuccessPopUpProvider } from "@/providers/SuccessPop";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
-      <main>{children}</main>
+      <SuccessPopUpProvider>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </SuccessPopUpProvider>
     </>
   );
 }

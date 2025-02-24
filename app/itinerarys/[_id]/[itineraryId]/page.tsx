@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import Acccordion from "@/components/ui/Acccordion";
 import "./style.scss";
 import Hero from "@/components/itinerary/itineraryById/hero/Hero";
+import PdfGenerator from "@/components/itinerary/itineraryById/pdf/PDF";
 
 type Props = {
   params: Promise<{ itineraryId: string }>;
@@ -47,7 +48,7 @@ const page = ({ params }: Props) => {
       <Suspense fallback={<div>Loading...</div>}>
         <Hero data={itineraryById} />
       </Suspense>
-      <Acccordion
+      {/*  <Acccordion
         titles={itineraryById?.itinerary.map((item) => item.title)}
         day={itineraryById?.itinerary.map((item) => item.day)}
       >
@@ -56,7 +57,8 @@ const page = ({ params }: Props) => {
             {item.day} {item.date}
           </div>
         ))}
-      </Acccordion>
+      </Acccordion> */}
+      <PdfGenerator data={itineraryById} />
     </>
   );
 };

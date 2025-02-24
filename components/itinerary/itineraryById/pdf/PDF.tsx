@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRef } from "react";
 import { Itinerary } from "@/sanity/types/itinerary";
 import { ThemeColors } from "@/utils/colors";
+import { generateAndReturnPdf } from "@/app/actions/pdfActions";
 
 export default function Home({ data }: { data?: Itinerary }) {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -10,22 +11,22 @@ export default function Home({ data }: { data?: Itinerary }) {
   const handleDownloadPdf = async () => {
     if (!contentRef.current) return;
 
-    // IMPORTANT: Wrap your content in a container that includes the <style> tag.
-    // This ensures that when you extract outerHTML, the font styling is included.
+    // Grab the HTML from the content container (make sure it wraps any <style> needed)
     const htmlContent = contentRef.current.outerHTML;
 
-    const response = await fetch("/api/generate-pdf", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: htmlContent }),
-    });
+    // Call the server action to generate the PDF as a base64 string
+    const base64Pdf = await generateAndReturnPdf(htmlContent);
 
-    if (!response.ok) {
-      console.error("PDF generation failed.");
-      return;
+    // Convert the base64 string back to a Uint8Array
+    const byteCharacters = atob(base64Pdf);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
+    const byteArray = new Uint8Array(byteNumbers);
 
-    const blob = await response.blob();
+    // Create a Blob from the PDF bytes and trigger a download
+    const blob = new Blob([byteArray], { type: "application/pdf" });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;

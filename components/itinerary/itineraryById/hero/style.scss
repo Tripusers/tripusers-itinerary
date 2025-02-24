@@ -1,0 +1,153 @@
+@use "@/app/scss/variables" as *;
+@use "@/app/scss/functions" as *;
+
+#Hero {
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: $dark;
+
+  @include breakpoint(medium) {
+    height: 50vh;
+  }
+
+  @include breakpoint(large) {
+    height: 100vh;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .title_container {
+    position: relative;
+    z-index: 2;
+
+    h1 {
+      display: flex;
+      flex-direction: column;
+      gap: rem(5);
+      //align-items: center;
+      color: $light;
+
+      .client_name {
+        position: relative;
+        z-index: 2;
+        @include cookie;
+        color: $yellow;
+        font-size: rem(80);
+        line-height: 0.5;
+
+        // Dynamic font size reduction for longer text
+        @for $i from 11 through 30 {
+          &.length-#{$i} {
+            font-size: rem(86 - (($i - 6) * 4));
+          }
+        }
+
+        @include breakpoint(xlarge) {
+          font-size: rem(100);
+        }
+      }
+
+      .place_name {
+        font-size: rem(64);
+        font-weight: 700;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
+        font-size: rem(60);
+        text-transform: uppercase;
+
+        // Dynamic font size reduction for longer text
+        @for $i from 8 through 30 {
+          &.length-#{$i} {
+            font-size: rem(60 - (($i - 6) * 4));
+          }
+        }
+
+        @include breakpoint(xlarge) {
+          font-size: rem(80);
+        }
+      }
+
+      .duration_trip {
+        display: flex;
+        align-items: center;
+        gap: rem(10);
+
+        .duration {
+          font-weight: 100;
+          font-size: rem(20);
+          //border: rem(1) solid $yellow;
+          padding: rem(5) rem(10);
+          border-radius: rem(10);
+          background-color: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(rem(10));
+        }
+
+        .trip {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  .slider-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    z-index: 1;
+    $slick_nav_position: 4vw;
+
+    @include breakpoint(xlarge) {
+      $slick_nav_position: 6vw;
+    }
+
+    .slick-prev,
+    .slick-next {
+      width: fit-content;
+      height: fit-content;
+
+      z-index: 1;
+      &::before {
+        color: $yellow;
+        font-size: rem(26);
+      }
+    }
+
+    .slick-prev {
+      left: $slick_nav_position;
+    }
+
+    .slick-next {
+      right: $slick_nav_position;
+    }
+
+    .img_container {
+      position: relative;
+      width: 100vw;
+      max-width: 100%;
+      height: 100vh;
+
+      @include breakpoint(medium) {
+        height: 50vh;
+      }
+
+      @include breakpoint(large) {
+        height: 100vh;
+      }
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        object-fit: cover;
+        opacity: 0.5;
+      }
+    }
+  }
+}

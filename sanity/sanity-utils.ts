@@ -190,9 +190,11 @@ export async function getItineraryById(
           price,
           priceActual,
           "coverImages": coverImages[] {
-            "_id": asset->_id,
-            "url": asset->url,
-            "metadata": asset->metadata,
+            "asset":{
+              "_id": asset->_id,
+              "url": asset->url,
+              "metadata": asset->metadata,
+            },
             hotspot,
             crop,
           },

@@ -3,8 +3,11 @@
 import PageLoading from "@/components/loader/PageLoading";
 import { getItineraryById } from "@/sanity/sanity-utils";
 import { Itinerary } from "@/sanity/types/itinerary";
-import { use, useEffect, useState } from "react";
+import { Suspense, use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
+import Acccordion from "@/components/ui/Acccordion";
+import "./style.scss";
+import Hero from "@/components/itinerary/itineraryById/hero/Hero";
 
 type Props = {
   params: Promise<{ itineraryId: string }>;
@@ -39,7 +42,23 @@ const page = ({ params }: Props) => {
     return <PageLoading />;
   }
 
-  return <section id="page">{itineraryById?.clientName}</section>;
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Hero data={itineraryById} />
+      </Suspense>
+      <Acccordion
+        titles={itineraryById?.itinerary.map((item) => item.title)}
+        day={itineraryById?.itinerary.map((item) => item.day)}
+      >
+        {itineraryById?.itinerary.map((item, i) => (
+          <div key={i}>
+            {item.day} {item.date}
+          </div>
+        ))}
+      </Acccordion>
+    </>
+  );
 };
 
 export default page;

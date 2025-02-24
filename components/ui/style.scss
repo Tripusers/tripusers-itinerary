@@ -1,0 +1,26 @@
+@use "@/app/scss/variables" as *;
+@use "@/app/scss/functions" as *;
+
+#Acccordion {
+  width: 100%;
+  
+  .accordion_controls {
+    display: flex;
+    gap: rem(10);
+    margin-bottom: rem(15);
+    
+    .accordion_control_btn {
+      padding: rem(8) rem(16);
+      border: 1px solid $dark;
+      border-radius: rem(5);
+      background: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: $dark;
+        color: $light;
+      }
+    }
+  }
+}

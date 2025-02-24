@@ -69,7 +69,7 @@ export type Itinerary = {
             };
 
         };
-    };
+    }[];
     exclusion: PortableTextBlock[];
     notes: PortableTextBlock[];
     fareBreakup: {

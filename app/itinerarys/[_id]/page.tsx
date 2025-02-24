@@ -15,7 +15,7 @@ import { heroInfo } from "@/sanity/types/heroInfo";
 import { Itinerary } from "@/sanity/types/itinerary";
 import Testimonial from "@/sanity/types/testimonials";
 import { notFound } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { Suspense, use, useEffect, useState } from "react";
 
 type Props = {
   params: Promise<{ _id: string }>;
@@ -71,10 +71,18 @@ const page = ({ params }: Props) => {
 
   return (
     <>
-      <ItineraryHero data={itineraryHero} />
-      <ItineraryCard data={itineraryById} />
-      <HeroInfo dataInfo={heroInfo} />
-      <Testimonials data={testimonials} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ItineraryHero data={itineraryHero} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ItineraryCard data={itineraryById} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <HeroInfo dataInfo={heroInfo} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Testimonials data={testimonials} />
+      </Suspense>
     </>
   );
 };

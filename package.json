@@ -12,8 +12,6 @@
     "@portabletext/react": "^3.2.1",
     "@sanity/vision": "^3.75.0",
     "axios": "^1.7.9",
-    "html2canvas": "^1.4.1",
-    "jspdf": "^3.0.0",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.7",
     "next": "15.1.7",

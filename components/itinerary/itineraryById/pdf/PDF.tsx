@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Itinerary } from "@/sanity/types/itinerary";
 import { ThemeColors } from "@/utils/colors";
 
-export default function Home({ data }: { data?: Itinerary }) {
+export default function PDF({ data }: { data?: Itinerary }) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPdf = async () => {

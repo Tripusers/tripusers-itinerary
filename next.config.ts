@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  serverExternalPackages: ['puppeteer'],
+  serverExternalPackages: ['puppeteer', 'chrome-aws-lambda', "@sparticuz/chromium"],
   images: {
     remotePatterns: [
       {

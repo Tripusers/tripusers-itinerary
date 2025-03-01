@@ -11,8 +11,10 @@
   "dependencies": {
     "@portabletext/react": "^3.2.1",
     "@sanity/vision": "^3.75.0",
+    "@sparticuz/chromium": "^132.0.0",
     "@sparticuz/chromium-min": "^132.0.0",
     "axios": "^1.7.9",
+    "chrome-aws-lambda": "^10.1.0",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.7",
     "next": "15.1.7",

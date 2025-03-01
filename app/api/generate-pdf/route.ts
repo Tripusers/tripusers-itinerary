@@ -8,10 +8,10 @@ import path from 'path';
 
 export async function POST(request: Request) {
     const isWindows = process.platform === 'win32';
-    // Use local Chrome on Windows, and the prebuilt binary on Linux (Vercel)
+    // On Windows, use local Chrome; on Linux, use the prebuilt binary from chromium-bin.
     const executablePath = isWindows
         ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-        : '/tmp/chromium';
+        : path.join(process.cwd(), 'chromium-bin', 'chrome'); // Adjust filename if necessary
 
     try {
         const { html } = await request.json();

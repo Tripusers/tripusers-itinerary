@@ -10,8 +10,9 @@ async function prebuildChromium() {
     return;
   }
 
-  // Define the target directory where the brotli files will be extracted.
-  const targetDir = path.join(__dirname, "../chromium-bin");
+  // Define the target directory where Chromium will be stored.
+  // This folder (chromium-bin) will be included in your deployment.
+  const targetDir = path.join(process.cwd(), "chromium-bin");
 
   // Create the directory if it doesn't exist.
   if (!fs.existsSync(targetDir)) {
@@ -23,7 +24,7 @@ async function prebuildChromium() {
     "https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar";
 
   try {
-    // Download and extract Chromium into the target directory.
+    // Download and extract Chromium into targetDir.
     const executablePath = await chromium.executablePath(tarUrl, targetDir);
     console.log("Chromium downloaded and extracted to:", executablePath);
 

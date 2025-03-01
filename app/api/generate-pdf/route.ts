@@ -8,10 +8,10 @@ import path from 'path';
 
 export async function POST(request: Request) {
     const isWindows = process.platform === 'win32';
-    // For Windows use a locally installed Chrome; for Linux (Vercel), use the prebuilt binary.
+    // Use local Chrome on Windows, and the prebuilt binary on Linux (Vercel)
     const executablePath = isWindows
         ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-        : path.join(process.cwd(), 'chromium-bin', 'chrome'); // Adjust the file name if needed
+        : '/tmp/chromium';
 
     try {
         const { html } = await request.json();
@@ -25,21 +25,16 @@ export async function POST(request: Request) {
             executablePath,
             headless: true,
         });
+
         const page = await browser.newPage();
         await page.setContent(html, { waitUntil: 'networkidle0' });
         const puppeteerPdfBuffer = await page.pdf({
             format: 'A4',
             printBackground: true,
-            margin: {
-                top: '30mm',
-                bottom: '30mm',
-                left: '12mm',
-                right: '12mm',
-            },
+            margin: { top: '30mm', bottom: '30mm', left: '12mm', right: '12mm' },
         });
         await browser.close();
 
-        // Process PDF with pdf-lib (e.g., add watermark)
         const originalPdfDoc = await PDFDocument.load(puppeteerPdfBuffer);
         const newPdfDoc = await PDFDocument.create();
 

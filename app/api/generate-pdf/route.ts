@@ -8,10 +8,9 @@ import path from 'path';
 
 export async function POST(request: Request) {
     const isWindows = process.platform === 'win32';
-    // On Windows, use local Chrome; on Linux, use the prebuilt binary from chromium-bin.
     const executablePath = isWindows
         ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-        : path.join(process.cwd(), 'chromium-bin', 'chrome'); // Adjust filename if necessary
+        : path.join(process.cwd(), 'chromium-bin', 'chrome'); // Use the bundled binary
 
     try {
         const { html } = await request.json();
@@ -25,7 +24,6 @@ export async function POST(request: Request) {
             executablePath,
             headless: true,
         });
-
         const page = await browser.newPage();
         await page.setContent(html, { waitUntil: 'networkidle0' });
         const puppeteerPdfBuffer = await page.pdf({

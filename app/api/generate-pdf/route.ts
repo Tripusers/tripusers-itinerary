@@ -8,12 +8,10 @@ import path from 'path';
 
 export async function POST(request: Request) {
 
-    const isWindows = process.platform === 'win32';
-    const executablePath = isWindows
-        ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-        : await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar");
+    //const isWindows = process.platform === 'win32';
+    const chromiumPack = "https://github.com/Sparticuz/chromium/releases/download/v132.0.0/chromium-v132.0.0-pack.tar";
 
-    console.log('isWindows->', isWindows);
+    //console.log('isWindows->', isWindows);
 
     try {
         // Extract the HTML from the POST request body
@@ -26,7 +24,7 @@ export async function POST(request: Request) {
         const browser = await puppeteer.launch({
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath,
+            executablePath: await chromium.executablePath(chromiumPack),
             headless: true,
         });
         const page = await browser.newPage();

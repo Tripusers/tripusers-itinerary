@@ -7,20 +7,18 @@ import fs from 'fs';
 import path from 'path';
 
 export async function POST(request: Request) {
-
     const isWindows = process.platform === 'win32';
+    // For Windows use a locally installed Chrome; for Linux (Vercel), use the prebuilt binary.
     const executablePath = isWindows
         ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-        : await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar");
+        : path.join(process.cwd(), 'chromium-bin', 'chrome'); // Adjust the file name if needed
 
     try {
-        // Extract the HTML from the POST request body
         const { html } = await request.json();
         if (!html) {
             return NextResponse.json({ error: 'Missing HTML content.' }, { status: 400 });
         }
 
-        // Launch Puppeteer and generate a PDF from the HTML content
         const browser = await puppeteer.launch({
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
@@ -41,42 +39,24 @@ export async function POST(request: Request) {
         });
         await browser.close();
 
-        // Load the Puppeteer-generated PDF into pdf-lib
+        // Process PDF with pdf-lib (e.g., add watermark)
         const originalPdfDoc = await PDFDocument.load(puppeteerPdfBuffer);
         const newPdfDoc = await PDFDocument.create();
 
-        // Load and embed the watermark image (PNG) from the public folder
         const watermarkPath = path.join(process.cwd(), 'public', 'tu_bg_pdf.png');
         const watermarkImageBytes = fs.readFileSync(watermarkPath);
         const watermarkImage = await newPdfDoc.embedPng(watermarkImageBytes);
 
-        // Process each page: create a new page with the watermark as background
         const pageCount = originalPdfDoc.getPageCount();
         for (let i = 0; i < pageCount; i++) {
             const originalPage = originalPdfDoc.getPage(i);
             const { width, height } = originalPage.getSize();
-            // Embed the original page so we can draw it as an XObject
             const [embeddedPage] = await newPdfDoc.embedPages([originalPage]);
-            // Create a new page with the same dimensions
             const newPage = newPdfDoc.addPage([width, height]);
-            // Draw the watermark image covering the full page with full opacity
-            newPage.drawImage(watermarkImage, {
-                x: 0,
-                y: 0,
-                width: width,
-                height: height,
-                opacity: 1,
-            });
-            // Draw the original page content on top
-            newPage.drawPage(embeddedPage, {
-                x: 0,
-                y: 0,
-                width: width,
-                height: height,
-            });
+            newPage.drawImage(watermarkImage, { x: 0, y: 0, width, height, opacity: 1 });
+            newPage.drawPage(embeddedPage, { x: 0, y: 0, width, height });
         }
 
-        // Save the modified PDF and return it in the response
         const finalPdfBytes = await newPdfDoc.save();
         return new NextResponse(Buffer.from(finalPdfBytes), {
             headers: {

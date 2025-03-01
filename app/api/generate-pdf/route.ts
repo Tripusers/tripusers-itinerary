@@ -1,11 +1,20 @@
 // app/api/generate-pdf/route.ts
 import { NextResponse } from 'next/server';
 import puppeteer from 'puppeteer';
+import chromium from "@sparticuz/chromium-min";
 import { PDFDocument } from 'pdf-lib';
 import fs from 'fs';
 import path from 'path';
 
 export async function POST(request: Request) {
+
+    const isWindows = process.platform === 'win32';
+    const executablePath = isWindows
+        ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+        : await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar");
+
+    console.log('isWindows->', isWindows);
+
     try {
         // Extract the HTML from the POST request body
         const { html } = await request.json();
@@ -15,7 +24,10 @@ export async function POST(request: Request) {
 
         // Launch Puppeteer and generate a PDF from the HTML content
         const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath,
+            headless: true,
         });
         const page = await browser.newPage();
         await page.setContent(html, { waitUntil: 'networkidle0' });

@@ -7,6 +7,7 @@ export type Itinerary = {
     _createdAt: string;
     title: string;
     clientName: string;
+    clientAccepted: boolean;
     clientNumber?: string;
     tripTo: string;
     date: string;

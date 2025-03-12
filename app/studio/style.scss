@@ -1,5 +1,4 @@
-@use "@/app/scss/variables" as *;
-@use "@/app/scss/functions" as *;
+@use "@/app/scss/abstracts" as *;
 
 #itinerarys_empty {
   height: 100vh;
@@ -148,6 +147,7 @@
 
         @include breakpoint(medium) {
           align-items: flex-end;
+          gap: rem(5);
         }
       }
 
@@ -164,9 +164,14 @@
           width: fit-content;
         }
 
-        &:hover {
-          background-color: $light;
-          color: $dark;
+        @include breakpoint(large) {
+          transition:
+            background-color 0.2s $e_quart,
+            color 0.2s $e_quart;
+          &:hover {
+            background-color: $light;
+            color: $dark;
+          }
         }
       }
     }

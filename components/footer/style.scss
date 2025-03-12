@@ -1,4 +1,4 @@
-@use "@/app/scss/variables" as *;
+@use "@/app/scss/abstracts" as *;
 
 #footerTop {
   background-color: #fd8d0406;
@@ -19,7 +19,7 @@
       flex-direction: row;
       align-items: center;
       gap: 5px;
-      width: fit-content; 
+      width: fit-content;
 
       h4 {
         font-weight: 400;

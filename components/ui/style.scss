@@ -1,14 +1,13 @@
-@use "@/app/scss/variables" as *;
-@use "@/app/scss/functions" as *;
+@use "@/app/scss/abstracts" as *;
 
 #Acccordion {
   width: 100%;
-  
+
   .accordion_controls {
     display: flex;
     gap: rem(10);
     margin-bottom: rem(15);
-    
+
     .accordion_control_btn {
       padding: rem(8) rem(16);
       border: 1px solid $dark;
@@ -16,10 +15,29 @@
       background: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      
+
       &:hover {
         background-color: $dark;
         color: $light;
+      }
+    }
+  }
+
+  .accordion_container {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+
+    .accordion_child {
+      box-shadow: 0 0 rem(10) rgba(0, 0, 0, 0.1);
+      border-radius: rem(8);
+      padding: rem(14) rem(14) 0 rem(14);
+      background-color: $light;
+      overflow: hidden;
+
+      .accordion_title {
+        width: 100%;
+        padding-bottom: rem(14);
       }
     }
   }

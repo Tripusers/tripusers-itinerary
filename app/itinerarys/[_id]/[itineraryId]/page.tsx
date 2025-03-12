@@ -5,10 +5,9 @@ import { getItineraryById } from "@/sanity/sanity-utils";
 import { Itinerary } from "@/sanity/types/itinerary";
 import { Suspense, use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
-import Acccordion from "@/components/ui/Acccordion";
 import "./style.scss";
 import Hero from "@/components/itinerary/itineraryById/hero/Hero";
-import PdfGenerator from "@/components/itinerary/itineraryById/pdf/PDF";
+import ItineraryByDay from "@/components/itinerary/itineraryById/itineraryByDay/ItineraryByDay";
 
 type Props = {
   params: Promise<{ itineraryId: string }>;
@@ -58,7 +57,10 @@ const page = ({ params }: Props) => {
           </div>
         ))}
       </Acccordion> */}
-      <PdfGenerator data={itineraryById} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ItineraryByDay data={itineraryById} />
+      </Suspense>
+      {/* <PdfGenerator data={itineraryById} /> */}
     </>
   );
 };

@@ -1,38 +1,9 @@
 import { Itinerary } from "@/sanity/types/itinerary";
 import "./style.scss";
-import Slider, { CustomArrowProps } from "react-slick";
-import OptImage from "@/components/commmon/OptImage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import useResponsive from "@/hooks/useResponsive";
-
-function SampleNextArrow(props: CustomArrowProps) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: "block",
-      }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props: CustomArrowProps) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: "block",
-      }}
-      onClick={onClick}
-    />
-  );
-}
+import ImageFadeSlider from "@/components/ui/Slider/ImageFadeSlider";
 
 const Hero = ({ data }: { data?: Itinerary }) => {
   const { isMobile } = useResponsive();
@@ -44,20 +15,6 @@ const Hero = ({ data }: { data?: Itinerary }) => {
     );
 
   //console.log("data->", data);
-
-  const settings = {
-    fade: true,
-    infinite: true,
-    autoplay: true,
-    speed: 800,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplaySpeed: 5000,
-    cssEase: "linear",
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    pauseOnHover: false,
-  };
 
   const client = `${data.clientName}`;
   const tripTo = `${data.tripTo}`;
@@ -85,15 +42,7 @@ const Hero = ({ data }: { data?: Itinerary }) => {
           </span>
         </h1>
       </div>
-      <div className="slider-container">
-        <Slider {...settings}>
-          {data.coverImages.map((image, i) => (
-            <div key={`${image.asset._id}-${i}`} className="img_container">
-              <OptImage image={image} alt="cover image" />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      <ImageFadeSlider images={data.coverImages} />
     </section>
   );
 };

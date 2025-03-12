@@ -7,6 +7,13 @@ import "./style.scss";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/context/toastContext";
 import axios from "axios";
+
+const red = "#fa0001";
+const green = "#044914";
+const pink = "#d91f8e";
+const orange = "#f56600";
+const black = "#1d1d1f";
+
 export default function Page() {
   const router = useRouter();
   const [allItinerarys, setAllItinerarys] = useState<Itinerary[]>([]);
@@ -47,17 +54,28 @@ export default function Page() {
     });
   };
 
-  const getItineraryStatus = (startDate: string, days: number) => {
+  const getItineraryStatus = (
+    startDate: string,
+    days: number,
+    clientAccepted: boolean
+  ) => {
     const start = new Date(startDate);
     const end = new Date(startDate);
     end.setDate(end.getDate() + days);
     const current = new Date();
 
     if (current > end) {
-      return "Expired";
-    } else if (current >= start && current <= end) {
-      return "Traveling";
+      return clientAccepted ? "Completed" : "Expired";
     }
+
+    if (current >= start && current <= end) {
+      return clientAccepted ? "Traveling" : "Not Accepted";
+    }
+
+    if (current < start) {
+      return clientAccepted ? "Upcoming" : "Pending";
+    }
+
     return "Upcoming";
   };
 
@@ -172,8 +190,43 @@ export default function Page() {
                 Date: {startDateFormatted(itinerary.date)}
               </p>
               <p className="itinerary_id">Id: {itinerary._id}</p>
-              <p className="itinerary_status">
-                Status: {getItineraryStatus(itinerary.date, itinerary.days)}
+              <p
+                className="itinerary_status"
+                style={{
+                  backgroundColor:
+                    getItineraryStatus(
+                      itinerary.date,
+                      itinerary.days,
+                      itinerary.clientAccepted
+                    ) === "Completed"
+                      ? green
+                      : getItineraryStatus(
+                            itinerary.date,
+                            itinerary.days,
+                            itinerary.clientAccepted
+                          ) === "Expired"
+                        ? black
+                        : getItineraryStatus(
+                              itinerary.date,
+                              itinerary.days,
+                              itinerary.clientAccepted
+                            ) === "Traveling"
+                          ? pink
+                          : getItineraryStatus(
+                                itinerary.date,
+                                itinerary.days,
+                                itinerary.clientAccepted
+                              ) === "Not Accepted"
+                            ? red
+                            : orange,
+                }}
+              >
+                Status:{" "}
+                {getItineraryStatus(
+                  itinerary.date,
+                  itinerary.days,
+                  itinerary.clientAccepted
+                )}
               </p>
             </div>
             <div className="right">

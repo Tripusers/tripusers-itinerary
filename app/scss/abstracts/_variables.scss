@@ -1,4 +1,4 @@
-@use "@/app/scss/functions" as *;
+@use "./functions" as *;
 
 //*----> variables
 
@@ -22,6 +22,8 @@ $red: #fa0001;
 $greenLight: #a4f8b8;
 $green: #044914;
 $c-bg: #171715;
+$darkPink: #d91f8e;
+$lightBorder: #e0e0e0;
 
 $b-radius: rem(20);
 

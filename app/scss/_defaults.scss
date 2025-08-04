@@ -20,10 +20,12 @@ body {
 
 img,
 picture,
-svg,
 video {
   display: block;
   max-width: 100%;
+}
+svg {
+  display: block;
 }
 
 img {

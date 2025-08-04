@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import "./style.scss";
 import Hero from "@/components/itinerary/itineraryById/hero/Hero";
 import ItineraryByDay from "@/components/itinerary/itineraryById/itineraryByDay/ItineraryByDay";
+import PDF from "@/components/itinerary/itineraryById/pdf/PDF";
 
 type Props = {
   params: Promise<{ itineraryId: string }>;
@@ -47,20 +48,11 @@ const page = ({ params }: Props) => {
       <Suspense fallback={<div>Loading...</div>}>
         <Hero data={itineraryById} />
       </Suspense>
-      {/*  <Acccordion
-        titles={itineraryById?.itinerary.map((item) => item.title)}
-        day={itineraryById?.itinerary.map((item) => item.day)}
-      >
-        {itineraryById?.itinerary.map((item, i) => (
-          <div key={i}>
-            {item.day} {item.date}
-          </div>
-        ))}
-      </Acccordion> */}
+
       <Suspense fallback={<div>Loading...</div>}>
         <ItineraryByDay data={itineraryById} />
       </Suspense>
-      {/* <PdfGenerator data={itineraryById} /> */}
+      <PDF data={itineraryById} />
     </>
   );
 };

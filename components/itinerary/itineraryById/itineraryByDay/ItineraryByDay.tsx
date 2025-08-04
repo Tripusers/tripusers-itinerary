@@ -2,17 +2,24 @@ import ImageFadeSlider from "@/components/ui/Slider/ImageFadeSlider";
 import "./style.scss";
 import { Itinerary } from "@/sanity/types/itinerary";
 import {
+  BedSingle,
   CalendarRange,
+  Check,
   ChevronDown,
+  CircleChevronDown,
+  Coffee,
+  CookingPot,
   Moon,
   Sun,
   UsersRound,
+  Utensils,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import Acccordion from "@/components/ui/Acccordion";
+import Acccordion, { AccordionItem } from "@/components/ui/Acccordion";
 import { PortableText } from "@portabletext/react";
 import CalendarIcon from "@/components/Icons/CalendarIcon";
 import { TbAirBalloon } from "react-icons/tb";
+import { motion, AnimatePresence } from "motion/react";
 
 type ItineraryStatus =
   | "Completed"
@@ -138,6 +145,10 @@ const ItineraryByDay: React.FC<{ data?: Itinerary }> = ({ data }) => {
   const [secondaryStates, setSecondaryStates] = useState<{
     [key: number]: number[];
   }>({});
+  const [isStayOpen, setIsStayOpen] = useState<boolean>(false);
+  const [isRoomsOpen, setIsRoomsOpen] = useState<boolean>(false);
+
+  //console.log("data->", data);
 
   if (!data) {
     return (
@@ -204,9 +215,7 @@ const ItineraryByDay: React.FC<{ data?: Itinerary }> = ({ data }) => {
           <div className="itinerarry_days">
             <div className="itinerary_cards_container">
               <Acccordion
-                titles={data.itinerary.map((item) => item.title)}
-                day={data.itinerary.map((item) => item.day)}
-                date={data.date}
+                className="accordion_child"
                 isOpen={isOpenMain}
                 onOpenChange={setIsOpenMain}
                 showAllBtn
@@ -238,7 +247,7 @@ const ItineraryByDay: React.FC<{ data?: Itinerary }> = ({ data }) => {
                         transition: "transform 0.3s ease",
                       }}
                     >
-                      <ChevronDown strokeWidth={2.5} size={20} />
+                      <CircleChevronDown strokeWidth={2} size={20} />
                     </div>
                   </div>
                 ))}
@@ -254,8 +263,9 @@ const ItineraryByDay: React.FC<{ data?: Itinerary }> = ({ data }) => {
                     {item.activaties && (
                       <div className="activities_container">
                         <Acccordion
+                          className="accordion_child"
                           initialOpen={true}
-                          isOpen={secondaryStates[i] || []}
+                          isOpen={secondaryStates[i] || [0]}
                           onOpenChange={(indices) => {
                             setSecondaryStates((prev) => ({
                               ...prev,
@@ -272,6 +282,16 @@ const ItineraryByDay: React.FC<{ data?: Itinerary }> = ({ data }) => {
                                   <TbAirBalloon size={14} /> Activity:
                                 </p>
                                 <h4>{activity.title}</h4>
+                                <div className="activity_sub">
+                                  {activity.duration && (
+                                    <p>Duration: {activity.duration}</p>
+                                  )}
+                                  {activity.ticketIncluded && (
+                                    <p className="ticket_included">
+                                      Ticket Included
+                                    </p>
+                                  )}
+                                </div>
                               </div>
                               <div
                                 className="arrow"
@@ -309,6 +329,213 @@ const ItineraryByDay: React.FC<{ data?: Itinerary }> = ({ data }) => {
                             </div>
                           ))}
                         </Acccordion>
+                      </div>
+                    )}
+                    {item.stay.title && (
+                      <div className="stay_container">
+                        <AccordionItem
+                          className="accordion_child"
+                          defaultOpen={false}
+                          isOpen={isStayOpen}
+                          onToggle={() => setIsStayOpen(!isStayOpen)}
+                          buttonContent={
+                            <div className="title">
+                              <div className="stay_title">
+                                <p>
+                                  <BedSingle size={14} /> Stay At:
+                                </p>
+                                <h4>{item.stay.title}</h4>
+                                <p>
+                                  Starts At:{" "}
+                                  {new Date(
+                                    `2000-01-01T${String(item.stay.startsAt)
+                                      .padStart(4, "0")
+                                      .replace(/(\d{2})(\d{2})/, "$1:$2")}:00`
+                                  ).toLocaleTimeString("en-US", {
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    hour12: true,
+                                  })}{" "}
+                                  | Duration: {item.stay.duration}{" "}
+                                  {item.stay.isNight ? "Nights" : "Days"}
+                                </p>
+                              </div>
+                              <div
+                                className="arrow"
+                                style={{
+                                  transform: isStayOpen
+                                    ? "rotate(-180deg)"
+                                    : "rotate(0deg)",
+                                  transition: "transform 0.3s ease",
+                                }}
+                              >
+                                <ChevronDown strokeWidth={1.5} />
+                              </div>
+                            </div>
+                          }
+                        >
+                          <div className="stay_children">
+                            <div className="checkIn_checkOut">
+                              <p>
+                                <span>Check In</span>
+                                <span className="dash" />
+                                <span>
+                                  {item.stay.duration}
+                                  {item.stay.isNight ? (
+                                    <>
+                                      N <Moon size={12} />
+                                    </>
+                                  ) : (
+                                    <>
+                                      D <Sun size={12} />
+                                    </>
+                                  )}
+                                </span>
+                                <span className="dash" />
+                                <span>Check Out</span>
+                              </p>
+                              <p>
+                                <span>
+                                  {new Date(
+                                    `2000-01-01T${String(item.stay.startsAt)
+                                      .padStart(4, "0")
+                                      .replace(/(\d{2})(\d{2})/, "$1:$2")}:00`
+                                  ).toLocaleTimeString("en-US", {
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    hour12: true,
+                                  })}
+                                  ,{" "}
+                                  {item.date && formatDate(item.stay.startDate)}
+                                </span>
+                                <span>
+                                  {new Date(
+                                    `2000-01-01T${String(item.stay.endsAt)
+                                      .padStart(4, "0")
+                                      .replace(/(\d{2})(\d{2})/, "$1:$2")}:00`
+                                  ).toLocaleTimeString("en-US", {
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    hour12: true,
+                                  })}
+                                  ,{" "}
+                                  {item.stay.endDate &&
+                                    formatDate(item.stay.endDate)}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="rooms_container">
+                              <h5>{item.stay.stayDetails.title}</h5>
+                              <div className="details">
+                                <div className="rooms_title">
+                                  <p>{item.stay.stayDetails.subTitle}</p>
+                                  <button
+                                    onClick={() => setIsRoomsOpen(!isRoomsOpen)}
+                                  >
+                                    {isRoomsOpen ? "- Details" : "+ Details"}
+                                  </button>
+                                </div>
+                                <AnimatePresence mode="sync">
+                                  {isRoomsOpen && (
+                                    <motion.div
+                                      initial={{ opacity: 0, height: 0 }}
+                                      animate={{ opacity: 1, height: "auto" }}
+                                      exit={{ opacity: 0, height: 0 }}
+                                      transition={{
+                                        duration: 0.3,
+                                        ease: "easeInOut",
+                                      }}
+                                      className="rooms_list"
+                                    >
+                                      {item.stay.stayDetails.rooms.map(
+                                        (room, i) => (
+                                          <div key={i} className="room">
+                                            <p>{room.room}</p>
+                                            <p>{room.roomDetails}</p>
+                                          </div>
+                                        )
+                                      )}
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                                <div className="room_inclusions_container">
+                                  <p className="title">Inclusions:</p>
+                                  <div className="room_inclusions">
+                                    <div className="roon_inclusion">
+                                      <p
+                                        className={
+                                          item.stay.stayDetails.inclusions &&
+                                          item.stay.stayDetails.inclusions
+                                            .isBreakfastIncluded
+                                            ? "included"
+                                            : ""
+                                        }
+                                      >
+                                        <Coffee size={15} />
+                                        Breakfast{" "}
+                                      </p>
+                                      {item.stay.stayDetails.inclusions &&
+                                      item.stay.stayDetails.inclusions
+                                        .isBreakfastIncluded ? (
+                                        <span className="included">
+                                          <Check size={15} /> Included
+                                        </span>
+                                      ) : (
+                                        <span>Not Included</span>
+                                      )}
+                                    </div>
+                                    <div className="roon_inclusion">
+                                      <p
+                                        className={
+                                          item.stay.stayDetails.inclusions &&
+                                          item.stay.stayDetails.inclusions
+                                            .isLunchIncluded
+                                            ? "included"
+                                            : ""
+                                        }
+                                      >
+                                        <Utensils size={15} />
+                                        Lunch{" "}
+                                      </p>
+                                      {item.stay.stayDetails.inclusions &&
+                                      item.stay.stayDetails.inclusions
+                                        .isLunchIncluded ? (
+                                        <span className="included">
+                                          <Check size={15} /> Included
+                                        </span>
+                                      ) : (
+                                        <span>Not Included</span>
+                                      )}
+                                    </div>
+                                    <div className="roon_inclusion">
+                                      <p
+                                        className={
+                                          item.stay.stayDetails.inclusions &&
+                                          item.stay.stayDetails.inclusions
+                                            .isDinnerIncluded
+                                            ? "included"
+                                            : ""
+                                        }
+                                      >
+                                        <CookingPot size={15} />
+                                        Dinner{" "}
+                                      </p>
+                                      {item.stay.stayDetails.inclusions &&
+                                      item.stay.stayDetails.inclusions
+                                        .isDinnerIncluded ? (
+                                        <span className="included">
+                                          <Check size={15} /> Included
+                                        </span>
+                                      ) : (
+                                        <span>Not Included</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionItem>
                       </div>
                     )}
                   </div>

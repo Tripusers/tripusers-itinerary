@@ -50,6 +50,7 @@ export type Itinerary = {
         stay: {
             title: string;
             startsAt: number;
+            startDate: string;
             endsAt: number;
             endDate: string;
             duration: number;

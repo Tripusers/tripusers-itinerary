@@ -1,8 +1,11 @@
 @use "@/app/scss/abstracts" as *;
 
 #Testimonials {
-  @include full_width_itinerary;
   padding-bottom: rem(20);
+  display: flex;
+  flex-direction: column;
+
+  @include full_width_itinerary;
 
   @include breakpoint(medium) {
     padding-bottom: rem(50);
@@ -137,5 +140,12 @@
         }
       }
     }
+  }
+
+  .load_more {
+    color: $yellow;
+    margin-block: rem(20);
+    width: fit-content;
+    align-self: center;
   }
 }

@@ -234,6 +234,7 @@ export async function getItineraryById(
             stay {
               title,
               startsAt,
+              startDate,
               endsAt,
               endDate,
               duration,

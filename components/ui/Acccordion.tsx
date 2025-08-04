@@ -1,139 +1,109 @@
 "use client";
 
-import { memo, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { memo, useState, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import "./style.scss";
-import CalendarIcon from "../Icons/CalendarIcon";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp, Minus } from "lucide-react";
+import useResponsive from "@/hooks/useResponsive";
 
 interface AccordionProps {
   children?: React.ReactNode[];
-  titles?: string[];
-  dayPrefix?: string;
-  day?: number[];
-  date?: string;
   initialOpenIndex?: number[];
   buttonContent?: React.ReactNode[];
   isOpen?: number[];
   onOpenChange?: (openIndices: number[]) => void;
   showAllBtn?: boolean;
   initialOpen?: boolean;
+  className?: string;
 }
 
-const getIncrementedDate = (baseDate: string, increment: number): string => {
-  const date = new Date(baseDate);
-  date.setDate(date.getDate() + increment);
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-};
+interface AccordionItemProps {
+  index?: number;
+  isOpen?: boolean;
+  onToggle?: (index: number) => void;
+  children: React.ReactNode;
+  buttonContent?: React.ReactNode;
+  defaultOpen?: boolean;
+  className?: string;
+}
 
-const AccordionItem = memo(
+export const AccordionItem = memo(
   ({
-    index,
-    title,
-    isOpen,
-    dayPrefix,
-    day,
-    date,
+    index = 0,
+    isOpen: controlledIsOpen,
     onToggle,
     children,
     buttonContent,
-  }: {
-    index: number;
-    title: string;
-    isOpen: boolean;
-    dayPrefix?: string;
-    day?: number;
-    date?: string;
-    onToggle: (index: number) => void;
-    children: React.ReactNode;
-    buttonContent?: React.ReactNode;
-  }) => (
-    <li className="accordion_child" key={`accordion-child${index}`}>
-      <button
-        className={`accordion_title ${isOpen ? "accordion_active" : ""}`}
-        onClick={() => onToggle(index)}
-        id={`accordion-title-${index}`}
-        aria-expanded={isOpen}
-        aria-controls={`accordion-content-${index}`}
-      >
-        {buttonContent || (
-          <>
-            <div className="calendar">
-              <CalendarIcon />
-              <div className="day_container">
-                {dayPrefix && <div className="prefix">{dayPrefix}</div>}
-                {day !== undefined && (
-                  <div className="day">{String(day).padStart(2, "0")}</div>
-                )}
-              </div>
-            </div>
-            <h4>
-              <span>{date && getIncrementedDate(date, index)}</span>
-              <span>{title}</span>
-            </h4>
-            <div
-              className="arrow"
-              style={{
-                transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                transition: "transform 0.3s ease",
+    defaultOpen = false,
+    className,
+  }: AccordionItemProps) => {
+    const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
+    const isItemOpen = controlledIsOpen ?? internalIsOpen;
+
+    const handleToggle = useCallback(() => {
+      if (onToggle && typeof index === "number") {
+        onToggle(index);
+      } else {
+        setInternalIsOpen(!internalIsOpen);
+      }
+    }, [onToggle, index, internalIsOpen]);
+
+    return (
+      <div className={className}>
+        <button
+          className={`accordion_title ${isItemOpen ? "accordion_active" : ""}`}
+          onClick={handleToggle}
+          id={`accordion-title-${index}`}
+          aria-expanded={isItemOpen}
+          aria-controls={`accordion-content-${index}`}
+        >
+          {buttonContent}
+        </button>
+        <AnimatePresence initial={false}>
+          {isItemOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{
+                height: "auto",
+                opacity: 1,
+                transition: {
+                  height: { duration: 0.3, ease: "easeOut" },
+                  opacity: { duration: 0.3, ease: "easeInOut" },
+                },
               }}
+              exit={{
+                height: 0,
+                opacity: 0,
+                transition: {
+                  height: { duration: 0.3, ease: "easeIn" },
+                  opacity: { duration: 0.2, ease: "easeIn" },
+                },
+              }}
+              id={`accordion-content-${index}`}
+              className={`accordion_content ${isItemOpen ? "accordion_content_open" : ""}`}
+              role="region"
+              aria-labelledby={`accordion-title-${index}`}
             >
-              <ChevronDown strokeWidth={2.5} />
-            </div>
-          </>
-        )}
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{
-              height: "auto",
-              opacity: 1,
-              transition: {
-                height: { duration: 0.3, ease: "easeOut" },
-                opacity: { duration: 0.3, ease: "easeInOut" },
-              },
-            }}
-            exit={{
-              height: 0,
-              opacity: 0,
-              transition: {
-                height: { duration: 0.3, ease: "easeIn" },
-                opacity: { duration: 0.2, ease: "easeIn" },
-              },
-            }}
-            id={`accordion-content-${index}`}
-            className={`accordion_content ${isOpen ? "accordion_content_open" : ""}`}
-            role="region"
-            aria-labelledby={`accordion-title-${index}`}
-          >
-            {children}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </li>
-  )
+              {children}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
 );
 
 AccordionItem.displayName = "AccordionItem";
 
 const Accordion = ({
   children = [],
-  titles = [],
-  dayPrefix = "Day",
-  day = [],
-  date,
   initialOpenIndex = [0],
   buttonContent = [],
   isOpen,
   onOpenChange,
   showAllBtn = false,
   initialOpen = true,
+  className,
 }: AccordionProps) => {
   const [internalOpenIndex, setInternalOpenIndex] = useState<number[]>(
     initialOpen ? initialOpenIndex : []
@@ -170,38 +140,22 @@ const Accordion = ({
     }
   }, [onOpenChange, isOpen]);
 
-  const isAllOpen = openAccordionIndex.length === children.length;
-
   return (
     <div id="Acccordion" role="presentation">
-      {showAllBtn && (
-        <div className="accordion_controls">
-          <button
-            onClick={isAllOpen ? handleCloseAll : handleOpenAll}
-            className="accordion_control_btn"
-            aria-label={isAllOpen ? "Close all sections" : "Open all sections"}
-          >
-            {isAllOpen ? "Close All" : "Open All"}
-          </button>
-        </div>
-      )}
-      <ul className="accordion_container" role="list">
+      <div className="accordion_container" role="list">
         {children.map((child, i) => (
           <AccordionItem
             key={i}
             index={i}
-            title={titles[i] || `Section ${i + 1}`}
             isOpen={openAccordionIndex.includes(i)}
-            dayPrefix={dayPrefix}
-            day={day[i]}
-            date={date}
             onToggle={handleClick}
             buttonContent={buttonContent[i]}
+            className={className}
           >
             {child}
           </AccordionItem>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

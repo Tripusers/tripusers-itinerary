@@ -2,23 +2,77 @@
 
 #Acccordion {
   width: 100%;
+  position: relative;
 
   .accordion_controls {
+    width: fit-content;
+    position: sticky;
+    top: 85%;
+    left: 100%;
+    z-index: 10;
     display: flex;
-    gap: rem(10);
-    margin-bottom: rem(15);
+    align-items: center;
+
+    @include breakpoint(medium) {
+      top: 50%;
+      left: calc(100% + rem(50));
+    }
+
+    &:hover {
+      .hovered {
+        width: rem(180);
+        padding: rem(5) rem(60) rem(5) rem(20);
+        opacity: 1;
+      }
+    }
+
+    .hovered {
+      width: 0;
+      position: absolute;
+      right: 0%;
+      top: 0;
+      background-color: $light;
+      z-index: 1;
+      transform-origin: right;
+      overflow-x: clip;
+      padding: 0;
+      border-radius: rem(40);
+      height: 100%;
+      box-shadow: 0 0 rem(10) rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      transition:
+        width 0.5s ease-in-out,
+        opacity 0.3s ease-in-out,
+        padding 0.5s ease-in-out;
+
+      p {
+        width: max-content;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
 
     .accordion_control_btn {
-      padding: rem(8) rem(16);
-      border: 1px solid $dark;
-      border-radius: rem(5);
-      background: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
 
-      &:hover {
-        background-color: $dark;
-        color: $light;
+      span {
+        width: rem(50);
+        border-radius: 100%;
+        border: rem(1) solid $yellow;
+        box-shadow: 0 0 rem(10) rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: $light;
+        aspect-ratio: 1 / 1;
+
+        svg:nth-of-type(1),
+        svg:nth-of-type(3) {
+          margin-block: rem(-14);
+        }
       }
     }
   }
@@ -27,18 +81,5 @@
     display: flex;
     flex-direction: column;
     gap: rem(20);
-
-    .accordion_child {
-      box-shadow: 0 0 rem(10) rgba(0, 0, 0, 0.1);
-      border-radius: rem(8);
-      padding: rem(14) rem(14) 0 rem(14);
-      background-color: $light;
-      overflow: hidden;
-
-      .accordion_title {
-        width: 100%;
-        padding-bottom: rem(14);
-      }
-    }
   }
 }

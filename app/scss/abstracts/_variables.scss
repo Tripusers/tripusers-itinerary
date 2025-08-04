@@ -75,7 +75,7 @@ $e_quart: cubic-bezier(0.76, 0, 0.24, 1);
   }
 
   @include breakpoint(large) {
-    padding-inline: 18vw;
+    padding-inline: 12vw;
   }
 
   @include breakpoint(xlarge) {

@@ -22,19 +22,18 @@
 
     img {
       object-fit: contain;
-
       animation: flash 1.5s ease-in-out infinite;
+    }
+  }
 
-      @keyframes flash {
-        0%,
-        100% {
-          opacity: 0.5;
-        }
+  @keyframes flash {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
 
-        50% {
-          opacity: 1;
-        }
-      }
+    50% {
+      opacity: 1;
     }
   }
 
@@ -57,16 +56,16 @@
       &:nth-of-type(3) {
         animation-delay: 400ms;
       }
+    }
+  }
 
-      @keyframes scale {
-        0%,
-        100% {
-          scale: 1;
-        }
-        50% {
-          scale: 1.5;
-        }
-      }
+  @keyframes scale {
+    0%,
+    100% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.5;
     }
   }
 }

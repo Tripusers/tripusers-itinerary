@@ -1,9 +1,7 @@
 @use "@/app/scss/abstracts" as *;
 
 #itinerary_hero {
-  @include full_width;
   height: 60vh;
-  @include bg_animation;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -11,6 +9,8 @@
   justify-content: center;
   flex-direction: column;
   border-radius: 0 0 rem(20) rem(20);
+  @include full_width;
+  @include bg_animation;
 
   @include breakpoint(medium) {
     height: 50vh;

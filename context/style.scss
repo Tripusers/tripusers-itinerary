@@ -2,14 +2,16 @@
 
 .toast-container {
   @include full-width;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  padding-top: rem(10);
-  display: flex;
-  flex-direction: column;
-  gap: rem(10);
-  height: fit-content;
+  & {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding-top: rem(10);
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+    height: fit-content;
+  }
 }
 
 .toast {

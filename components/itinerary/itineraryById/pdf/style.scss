@@ -1,3 +1,14 @@
+@use "@/app/scss/abstracts" as *;
+
+.pdf_container_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-block: rem(20);
+  @include full_width;
+}
+
 .pdf_container {
   page-break-after: always;
   -webkit-print-color-adjust: exact !important;

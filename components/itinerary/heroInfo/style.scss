@@ -1,9 +1,9 @@
 @use "@/app/scss/abstracts" as *;
 
 #HeroInfo {
-  @include full_width;
   margin-top: rem(100);
   margin-bottom: rem(80);
+  @include full_width;
 
   @include breakpoint(medium) {
     padding-inline: 10vw;

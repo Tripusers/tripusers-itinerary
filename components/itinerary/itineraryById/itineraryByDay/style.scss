@@ -33,7 +33,10 @@
 
   .itinerary_heading {
     @include full_width_itinerary;
-    padding-block: rem(20);
+
+    & {
+      padding-block: rem(20);
+    }
 
     h2 {
       display: flex;
@@ -228,7 +231,9 @@
 
       .itinerarry_days {
         @include full_width_itinerary;
-        padding-block: rem(20);
+        & {
+          padding-block: rem(20);
+        }
 
         @include breakpoint(medium) {
           width: 100%;
